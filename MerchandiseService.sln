@@ -10,12 +10,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{434C0B2E-59F1-4DBC-B675-4350E74DD55E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{84B33F89-B200-4A29-A3EB-A670C2C94024}"
+ProjectSection(SolutionItems) = preProject
+	tests\README.md = tests\README.md
+EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService", "src\MerchandiseService\MerchandiseService.csproj", "{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{3B8B234F-A896-44DC-AEDD-E879A623980B}"
 ProjectSection(SolutionItems) = preProject
-	docker-compose.yml = docker-compose.yml
+	deploy\docker-compose.yml = deploy\docker-compose.yml
 EndProjectSection
 EndProject
 Global
