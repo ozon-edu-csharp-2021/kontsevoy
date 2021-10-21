@@ -5,7 +5,7 @@ services:
     container_name: MerchandiseService
     hostname: merchandise_service
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile
       
   stock-api:
