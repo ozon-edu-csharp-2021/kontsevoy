@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{CACF8244-9992-4242-BFFF-DE4593064875}"
+ProjectSection(SolutionItems) = preProject
+	Dockerfile = Dockerfile
+	.dockerignore = .dockerignore
+	README.md = README.md
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{434C0B2E-59F1-4DBC-B675-4350E74DD55E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{84B33F89-B200-4A29-A3EB-A670C2C94024}"
+ProjectSection(SolutionItems) = preProject
+	tests\README.md = tests\README.md
+EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService", "src\MerchandiseService\MerchandiseService.csproj", "{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{3B8B234F-A896-44DC-AEDD-E879A623980B}"
+ProjectSection(SolutionItems) = preProject
+	deploy\docker-compose.yml = deploy\docker-compose.yml
+EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

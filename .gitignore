@@ -1,0 +1,10 @@
+# Rider
+.idea
+
+# Binaries
+/src/*/obj
+/src/*/bin
+
+# Local Settings
+**.Local.json
+**.DotSettings.user

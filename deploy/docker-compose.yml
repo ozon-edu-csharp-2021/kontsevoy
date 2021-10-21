@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  merchandise-service:
+    container_name: MerchandiseService
+    hostname: merchandise_service
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      
+  stock-api:
+    image: 'ghcr.io/ozon-edu-csharp-2021/stock-api:main'
+    container_name: StockApi
+    hostname: stock_api
+    ports:
+      - "8080:80"
+    depends_on:
+      - redis
+    
+  emailing-service:
+    image: 'ghcr.io/ozon-edu-csharp-2021/emailing-service:main'
+    container_name: EmailingService
+    hostname: emailing_service
+
+  supply-service:
+    image: 'ghcr.io/ozon-edu-csharp-2021/supply-service:main'
+    container_name: SupplyService
+    hostname: supply_service
+
+  employees-service:
+    image: 'ghcr.io/ozon-edu-csharp-2021/employees-service:main'
+    container_name: EmployeesService
+    hostname: employees_service
+
+  redis:
+    image: redis
+    container_name: redis
+    hostname: redis
