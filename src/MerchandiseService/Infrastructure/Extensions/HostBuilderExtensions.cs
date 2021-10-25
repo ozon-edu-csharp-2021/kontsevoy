@@ -14,6 +14,8 @@ namespace MerchandiseService.Infrastructure.Extensions
             builder.ConfigureServices(services =>
             {
                 services.AddSingleton<IStartupFilter, AliveStartupFilter>();
+                services.AddSingleton<IStartupFilter, SwaggerStartupFilter>();
+                services.AddSwaggerGen();
                 services.AddGrpc(options => options.Interceptors.Add<LoggingInterceptor>());
             });
             return builder;
