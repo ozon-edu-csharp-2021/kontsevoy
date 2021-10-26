@@ -21,6 +21,10 @@ ProjectSection(SolutionItems) = preProject
 	deploy\docker-compose.yml = deploy\docker-compose.yml
 EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.HttpModels", "src\MerchandiseService.HttpModels\MerchandiseService.HttpModels.csproj", "{4176A22A-F9CA-4B86-9CC5-76C6FE275D15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.HttpClient", "src\MerchandiseService.HttpClient\MerchandiseService.HttpClient.csproj", "{1D359D1F-3F4C-49F8-AE89-43CAF89F8CFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,11 +32,21 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
+		{4176A22A-F9CA-4B86-9CC5-76C6FE275D15} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
+		{1D359D1F-3F4C-49F8-AE89-43CAF89F8CFC} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4176A22A-F9CA-4B86-9CC5-76C6FE275D15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4176A22A-F9CA-4B86-9CC5-76C6FE275D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4176A22A-F9CA-4B86-9CC5-76C6FE275D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4176A22A-F9CA-4B86-9CC5-76C6FE275D15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D359D1F-3F4C-49F8-AE89-43CAF89F8CFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D359D1F-3F4C-49F8-AE89-43CAF89F8CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D359D1F-3F4C-49F8-AE89-43CAF89F8CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D359D1F-3F4C-49F8-AE89-43CAF89F8CFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
