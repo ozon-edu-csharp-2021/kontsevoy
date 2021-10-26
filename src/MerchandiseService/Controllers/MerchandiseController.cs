@@ -14,10 +14,7 @@ namespace MerchandiseService.Controllers
     {
         private IMerchandiseService MerchandiseService { get; }
 
-        public MerchandiseController(IMerchandiseService merchandiseService)
-        {
-            MerchandiseService = merchandiseService;
-        }
+        public MerchandiseController(IMerchandiseService merchandiseService) => MerchandiseService = merchandiseService;
         
         [HttpPost("request")]
         public async Task<ActionResult<RequestMerchResponseModel>> RequestMerch(RequestMerchRequestModel requestMerchRequest, CancellationToken token)
@@ -29,7 +26,7 @@ namespace MerchandiseService.Controllers
             }, token);
             return Ok(new RequestMerchResponseModel
             {
-                RequestMerchId = merchRequestId
+                MerchRequestId = merchRequestId
             });
         }
         

@@ -1,3 +1,4 @@
+using MerchandiseService.GrpcServices;
 using MerchandiseService.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,7 +22,11 @@ namespace MerchandiseService
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGrpcService<MerchandiseGrpcService>();
+                endpoints.MapControllers();
+            });
         }
     }
 }

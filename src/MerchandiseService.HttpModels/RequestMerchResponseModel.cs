@@ -2,6 +2,6 @@
 {
     public class RequestMerchResponseModel
     {
-        public long RequestMerchId { get; set; }
+        public long MerchRequestId { get; set; }
     }
 }

@@ -10,10 +10,7 @@ namespace MerchandiseService.Infrastructure.Interceptors
     {
         private ILogger<LoggingInterceptor> Logger { get; }
 
-        public LoggingInterceptor(ILogger<LoggingInterceptor> logger)
-        {
-            Logger = logger;
-        }
+        public LoggingInterceptor(ILogger<LoggingInterceptor> logger) => Logger = logger;
 
         public override Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request,
             ServerCallContext context,
