@@ -16,6 +16,12 @@ namespace MerchandiseService.Controllers
 
         public MerchandiseController(IMerchandiseService merchandiseService) => MerchandiseService = merchandiseService;
         
+        /// <summary>
+        /// Сформировать запрос на выдачу комплекта мерча
+        /// </summary>
+        /// <param name="requestMerchRequest">Кому необходимо выдать и какой тип комплекта мерча</param>
+        /// <param name="token">Токен отмены</param>
+        /// <returns>Идентификатор инициированного запроса</returns>
         [HttpPost("request")]
         public async Task<ActionResult<RequestMerchResponse>> RequestMerch(RequestMerchRequest requestMerchRequest, CancellationToken token)
         {
@@ -27,6 +33,12 @@ namespace MerchandiseService.Controllers
             return Ok(new RequestMerchResponse(merchRequestId));
         }
         
+        /// <summary>
+        /// Проверить был ли выдан комплект мерча 
+        /// </summary>
+        /// <param name="inquiryMerchRequest">Кому и какой тип комплекта</param>
+        /// <param name="token">Токен отмены</param>
+        /// <returns>Факт выдачи</returns>
         [HttpPost("inquiry")]
         public async Task<ActionResult<InquiryMerchResponse>> InquiryMerch(InquiryMerchRequest inquiryMerchRequest, CancellationToken token)
         {

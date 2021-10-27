@@ -1,9 +1,13 @@
-﻿using MerchandiseService.Infrastructure.Filters;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using MerchandiseService.Infrastructure.Filters;
 using MerchandiseService.Infrastructure.Interceptors;
 using MerchandiseService.Infrastructure.StartupFilters;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace MerchandiseService.Infrastructure.Extensions
 {
@@ -15,7 +19,16 @@ namespace MerchandiseService.Infrastructure.Extensions
             {
                 services.AddSingleton<IStartupFilter, AliveStartupFilter>();
                 services.AddSingleton<IStartupFilter, SwaggerStartupFilter>();
-                services.AddSwaggerGen();
+                services.AddSwaggerGen(options =>
+                {
+                    options.SwaggerDoc("v1", new OpenApiInfo {Title = "MerchandiseService", Version = "v1"});
+                
+                    options.CustomSchemaIds(x => x.FullName);
+
+                    var xmlFileName = Assembly.GetExecutingAssembly().GetName().Name + ".xml";
+                    var xmlFilePath = Path.Combine(AppContext.BaseDirectory, xmlFileName);
+                    options.IncludeXmlComments(xmlFilePath);
+                });
                 services.AddGrpc(options => options.Interceptors.Add<LoggingInterceptor>());
             });
             return builder;

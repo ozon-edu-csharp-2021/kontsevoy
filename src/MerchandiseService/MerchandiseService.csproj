@@ -5,6 +5,12 @@
         <Nullable>enable</Nullable>
         <Authors>Alexander</Authors>
         <Company>Ozon</Company>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <Version>0.1.0</Version>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <NoWarn>1591;1701;1702</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
