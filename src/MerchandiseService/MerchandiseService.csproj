@@ -15,7 +15,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MerchandiseService.Grpc\MerchandiseService.Grpc.csproj" />
-      <ProjectReference Include="..\MerchandiseService.HttpModels\MerchandiseService.HttpModels.csproj" />
+      <ProjectReference Include="..\MerchandiseService.HttpClient\MerchandiseService.HttpClient.csproj" />
     </ItemGroup>
 
 </Project>

@@ -3,15 +3,15 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using MerchandiseService.HttpModels;
+using MerchandiseService.HttpClient.Models;
 using SysHttpClient = System.Net.Http.HttpClient;
 
 namespace MerchandiseService.HttpClient
 {
     public interface IMerchandiseHttpClient
     {
-        Task<RequestMerchResponseModel> RequestMerch(RequestMerchRequestModel request, CancellationToken token);
-        Task<InquiryMerchResponseModel> InquiryMerch(InquiryMerchRequestModel request, CancellationToken token);
+        Task<RequestMerchResponse> RequestMerch(RequestMerchRequest request, CancellationToken token);
+        Task<InquiryMerchResponse> InquiryMerch(InquiryMerchRequest request, CancellationToken token);
     }
     
     public class MerchandiseHttpClient : IMerchandiseHttpClient
@@ -29,10 +29,10 @@ namespace MerchandiseService.HttpClient
             return JsonSerializer.Deserialize<R>(body);
         }
 
-        public async Task<RequestMerchResponseModel> RequestMerch(RequestMerchRequestModel request, CancellationToken token) =>
-            await PostAsync<RequestMerchRequestModel, RequestMerchResponseModel>("v1/api/merch/request", request, token);
+        public async Task<RequestMerchResponse> RequestMerch(RequestMerchRequest request, CancellationToken token) =>
+            await PostAsync<RequestMerchRequest, RequestMerchResponse>("v1/api/merch/request", request, token);
 
-        public async Task<InquiryMerchResponseModel> InquiryMerch(InquiryMerchRequestModel request, CancellationToken token) =>
-            await PostAsync<InquiryMerchRequestModel, InquiryMerchResponseModel>("v1/api/merch/inquiry", request, token);
+        public async Task<InquiryMerchResponse> InquiryMerch(InquiryMerchRequest request, CancellationToken token) =>
+            await PostAsync<InquiryMerchRequest, InquiryMerchResponse>("v1/api/merch/inquiry", request, token);
     }
 }
