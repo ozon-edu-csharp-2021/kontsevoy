@@ -5,10 +5,23 @@
         <Nullable>enable</Nullable>
         <Authors>Alexander</Authors>
         <Company>Ozon</Company>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <Version>0.1.0</Version>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <NoWarn>1591;1701;1702</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="CSharpCourse.Core.Lib" Version="1.4.0" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MerchandiseService.Grpc\MerchandiseService.Grpc.csproj" />
+      <ProjectReference Include="..\MerchandiseService.HttpClient\MerchandiseService.HttpClient.csproj" />
     </ItemGroup>
 
 </Project>
