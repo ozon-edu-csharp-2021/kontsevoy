@@ -4,6 +4,8 @@
 # Binaries
 /src/*/obj
 /src/*/bin
+/tests/*/obj
+/tests/*/bin
 
 # Local Settings
 **.Local.json

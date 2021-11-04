@@ -29,6 +29,8 @@ namespace MerchandiseService.Infrastructure.Extensions
                     var xmlFilePath = Path.Combine(AppContext.BaseDirectory, xmlFileName);
                     options.IncludeXmlComments(xmlFilePath);
                 });
+                services.AddInfrastructureServices();
+                services.AddInfrastructureRepositories();
                 services.AddGrpc(options => options.Interceptors.Add<LoggingInterceptor>());
             });
             return builder;

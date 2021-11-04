@@ -10,9 +10,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{434C0B2E-59F1-4DBC-B675-4350E74DD55E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{84B33F89-B200-4A29-A3EB-A670C2C94024}"
-ProjectSection(SolutionItems) = preProject
-	tests\README.md = tests\README.md
-EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService", "src\MerchandiseService\MerchandiseService.csproj", "{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}"
 EndProject
@@ -25,6 +22,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.HttpClie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Grpc", "src\MerchandiseService.Grpc\MerchandiseService.Grpc.csproj", "{63D21B1A-E444-4115-BC1B-2F4E59E64617}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Domain", "src\MerchandiseService.Domain\MerchandiseService.Domain.csproj", "{A570AC0F-2F60-4FE6-9FE2-B7BD7E1A44B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Infrastructure", "src\MerchandiseService.Infrastructure\MerchandiseService.Infrastructure.csproj", "{76226AB6-5136-41D9-A943-6BA1AC2957C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Domain.Tests", "tests\MerchandiseService.Domain.Tests\MerchandiseService.Domain.Tests.csproj", "{9B318882-3AEC-485E-BF72-9E1667D2806F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +37,9 @@ Global
 		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
 		{1D359D1F-3F4C-49F8-AE89-43CAF89F8CFC} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
 		{63D21B1A-E444-4115-BC1B-2F4E59E64617} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
+		{A570AC0F-2F60-4FE6-9FE2-B7BD7E1A44B3} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
+		{76226AB6-5136-41D9-A943-6BA1AC2957C3} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
+		{9B318882-3AEC-485E-BF72-9E1667D2806F} = {84B33F89-B200-4A29-A3EB-A670C2C94024}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -48,5 +54,17 @@ Global
 		{63D21B1A-E444-4115-BC1B-2F4E59E64617}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63D21B1A-E444-4115-BC1B-2F4E59E64617}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63D21B1A-E444-4115-BC1B-2F4E59E64617}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A570AC0F-2F60-4FE6-9FE2-B7BD7E1A44B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A570AC0F-2F60-4FE6-9FE2-B7BD7E1A44B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A570AC0F-2F60-4FE6-9FE2-B7BD7E1A44B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A570AC0F-2F60-4FE6-9FE2-B7BD7E1A44B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76226AB6-5136-41D9-A943-6BA1AC2957C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76226AB6-5136-41D9-A943-6BA1AC2957C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76226AB6-5136-41D9-A943-6BA1AC2957C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76226AB6-5136-41D9-A943-6BA1AC2957C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B318882-3AEC-485E-BF72-9E1667D2806F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B318882-3AEC-485E-BF72-9E1667D2806F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B318882-3AEC-485E-BF72-9E1667D2806F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B318882-3AEC-485E-BF72-9E1667D2806F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

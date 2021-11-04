@@ -1,8 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using MerchandiseService.HttpClient.Models;
-using MerchandiseService.Models;
-using MerchandiseService.Services.Interfaces;
+using MerchandiseService.Infrastructure.Commands.MerchRequestAggregate;
+using MerchandiseService.Infrastructure.Queries.MerchRequestAggregate;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MerchandiseService.Controllers
@@ -12,41 +13,49 @@ namespace MerchandiseService.Controllers
     [Produces("application/json")]
     public class MerchandiseController : ControllerBase
     {
-        private IMerchandiseService MerchandiseService { get; }
+        private IMediator Mediator { get; }
 
-        public MerchandiseController(IMerchandiseService merchandiseService) => MerchandiseService = merchandiseService;
+        public MerchandiseController(IMediator mediator) => Mediator = mediator;
         
         /// <summary>
         /// Сформировать запрос на выдачу комплекта мерча
         /// </summary>
-        /// <param name="requestMerchRequest">Кому необходимо выдать и какой тип комплекта мерча</param>
+        /// <param name="request">Кому необходимо выдать и какой тип комплекта мерча</param>
         /// <param name="token">Токен отмены</param>
         /// <returns>Идентификатор инициированного запроса</returns>
         [HttpPost("request")]
-        public async Task<ActionResult<RequestMerchResponse>> RequestMerch(RequestMerchRequest requestMerchRequest, CancellationToken token)
+        public async Task<ActionResult<RequestMerchResponse>> RequestMerch(RequestMerchRequest request, CancellationToken token)
         {
-            var merchRequestId = await MerchandiseService.CreateMerchRequest(new MerchRequestCreationModel
+            var merchRequest = new CreateMerchRequestCommand
             {
-                EmployeeId = requestMerchRequest.EmployeeId,
-                MerchPackType = requestMerchRequest.MerchPackType
-            }, token);
+                EmployeeId = request.EmployeeId,
+                NotificationEmail = request.NotificationEmail,
+                ClothingSize = (int)request.ClothingSize,
+                MerchPackType = (int)request.MerchPackType
+            };
+            
+            var merchRequestId = await Mediator.Send(merchRequest, token);
+            
             return Ok(new RequestMerchResponse(merchRequestId));
         }
         
         /// <summary>
         /// Проверить был ли выдан комплект мерча 
         /// </summary>
-        /// <param name="inquiryMerchRequest">Кому и какой тип комплекта</param>
+        /// <param name="request">Кому и какой тип комплекта</param>
         /// <param name="token">Токен отмены</param>
         /// <returns>Факт выдачи</returns>
         [HttpPost("inquiry")]
-        public async Task<ActionResult<InquiryMerchResponse>> InquiryMerch(InquiryMerchRequest inquiryMerchRequest, CancellationToken token)
+        public async Task<ActionResult<InquiryMerchResponse>> InquiryMerch(InquiryMerchRequest request, CancellationToken token)
         {
-            var isHandOut = await MerchandiseService.InquiryMerch(new MerchInquiryModel
+            var inquiryRequest = new InquiryMerchRequestQuery
             {
-                EmployeeId = inquiryMerchRequest.EmployeeId,
-                MerchPackType = inquiryMerchRequest.MerchPackType
-            }, token);
+                EmployeeId = request.EmployeeId,
+                MerchPackId = (int)request.MerchPackType
+            };
+
+            var isHandOut = await Mediator.Send(inquiryRequest, token);
+            
             return Ok(new InquiryMerchResponse(isHandOut));
         }
     }

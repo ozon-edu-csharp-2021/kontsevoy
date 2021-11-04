@@ -1,25 +1,28 @@
 ﻿using System.Threading.Tasks;
-using CSharpCourse.Core.Lib.Enums;
 using Grpc.Core;
+using MediatR;
 using MerchandiseService.Grpc;
-using MerchandiseService.Models;
-using MerchandiseService.Services.Interfaces;
+using MerchandiseService.Infrastructure.Commands.MerchRequestAggregate;
+using MerchandiseService.Infrastructure.Queries.MerchRequestAggregate;
 
 namespace MerchandiseService.GrpcServices
 {
     public class MerchandiseGrpcService : MerchandiseServiceGrpc.MerchandiseServiceGrpcBase
     {
-        private IMerchandiseService MerchandiseService { get; set; }
+        private IMediator Mediator { get; set; }
 
-        public MerchandiseGrpcService(IMerchandiseService merchandiseService) => MerchandiseService = merchandiseService;
+        public MerchandiseGrpcService(IMediator mediator) => Mediator = mediator;
         
         public override async Task<RequestMerchResponse> RequestMerch(RequestMerchRequest request, ServerCallContext context)
         {
-            var requestId = await MerchandiseService.CreateMerchRequest(new MerchRequestCreationModel
+            var requestId = await Mediator.Send(new CreateMerchRequestCommand
             {
                 EmployeeId = request.EmployeeId,
-                MerchPackType = (MerchType)request.MerchPackType
+                NotificationEmail = request.NotificationEmail,
+                ClothingSize = (int)request.ClothingSize,
+                MerchPackType = (int)request.MerchPackType
             }, context.CancellationToken);
+            
             return new RequestMerchResponse
             {
                 MerchRequestId = requestId
@@ -28,11 +31,12 @@ namespace MerchandiseService.GrpcServices
 
         public override async Task<InquiryMerchResponse> InquiryMerch(InquiryMerchRequest request, ServerCallContext context)
         {
-            var isHandOut = await MerchandiseService.InquiryMerch(new MerchInquiryModel
+            var isHandOut = await Mediator.Send(new InquiryMerchRequestQuery
             {
                 EmployeeId = request.EmployeeId,
-                MerchPackType = (MerchType)request.MerchPackType
+                MerchPackId = (int)request.MerchPackType
             }, context.CancellationToken);
+            
             return new InquiryMerchResponse
             {
                 HandOut = isHandOut
