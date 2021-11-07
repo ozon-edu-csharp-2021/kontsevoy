@@ -7,13 +7,13 @@ namespace MerchandiseService.Domain.Tests
 {
     public class ClothingSizeEnumerationTests
     {
-        [Fact]
+        [Fact(DisplayName = "Отсутствие экземпляра с кодом 0")]
         public void CantGetValueByZeroId()
         {
             Assert.Throws<ArgumentException>(() => ClothingSize.GetById(0));
         }
         
-        [Fact]
+        [Fact(DisplayName = "Равенство экземпляров по ссылкам")]
         public void ReferenceEquality()
         {
             Assert.Same(ClothingSize.XS, ClothingSize.GetById(ClothingSize.XS.Id));
@@ -24,7 +24,7 @@ namespace MerchandiseService.Domain.Tests
             Assert.Same(ClothingSize.XXL, ClothingSize.GetById(ClothingSize.XXL.Id));
         }
         
-        [Fact]
+        [Fact(DisplayName = "Все предопределённые значения можно получить через GetById")]
         public void GetByIdWorks()
         {
             foreach (var value in Enumeration.GetAll<ClothingSize>())
