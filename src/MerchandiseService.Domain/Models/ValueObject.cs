@@ -33,13 +33,13 @@ namespace MerchandiseService.Domain.Models
         public static bool operator !=(ValueObject left, ValueObject right) => !(left == right);
     }
 
-    public abstract class ValueObject<T> where T : IComparable
+    public abstract class ValueObject<T> : ValueObject where T : IComparable
     {
         public T Value { get; }
 
         public ValueObject(T value) => Value = value;
         
-        protected IEnumerable<object> GetEqualityComponents() 
+        protected override IEnumerable<object> GetEqualityComponents() 
         {
             yield return Value;
         }

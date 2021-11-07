@@ -28,7 +28,7 @@ namespace MerchandiseService.Infrastructure.Stubs
             bool result;
             lock (Dictionary)
             {
-                result = Dictionary.Values.Any(f => f.EmployeeId.Value == employeeId.Value && f.MerchPack == merchPack);
+                result = Dictionary.Values.Any(f => f.EmployeeId == employeeId && f.MerchPack == merchPack);
             }
 
             return Task.FromResult(result);
