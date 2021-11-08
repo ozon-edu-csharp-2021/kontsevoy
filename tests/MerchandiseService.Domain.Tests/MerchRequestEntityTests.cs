@@ -13,20 +13,20 @@ namespace MerchandiseService.Domain.Tests
         {
             Assert.Throws<ArgumentNullException>(() => new MerchRequest(null, null));
             Assert.Throws<ArgumentNullException>(() => new MerchRequest(null, MerchPack.Veteran));
-            Assert.Throws<ArgumentNullException>(() => new MerchRequest(new EmployeeId(0), null));
+            Assert.Throws<ArgumentNullException>(() => new MerchRequest(new EmployeeId(0UL), null));
         }
         
         [Fact(DisplayName = "Можно получить переданный идентификатор сотрудника")]
         public void CanObtainEmployeeId()
         {
-            var id = new EmployeeId(821479);
+            var id = new EmployeeId(821479UL);
             Assert.Equal(id, new MerchRequest(id, MerchPack.Welcome).EmployeeId);
         }
         
         [Fact(DisplayName = "Можно получить переданный MerchPack")]
         public void CanObtainMerchPack()
         {
-            var merchRequest = new MerchRequest(new EmployeeId(0), MerchPack.ConferenceListener);
+            var merchRequest = new MerchRequest(new EmployeeId(0UL), MerchPack.ConferenceListener);
             
             Assert.Equal(MerchPack.ConferenceListener, merchRequest.MerchPack);
         }
@@ -35,7 +35,7 @@ namespace MerchandiseService.Domain.Tests
         public void CanSetMerchRequestId()
         {
             var id = new MerchRequestId(821479);
-            var merchRequest = new MerchRequest(new EmployeeId(0), MerchPack.Welcome)
+            var merchRequest = new MerchRequest(new EmployeeId(0UL), MerchPack.Welcome)
             {
                 Id = id
             };
@@ -47,7 +47,7 @@ namespace MerchandiseService.Domain.Tests
         public void CantChangeMerchRequestId()
         {
             var id = new MerchRequestId(8);
-            var merchRequest = new MerchRequest(new EmployeeId(0), MerchPack.Welcome)
+            var merchRequest = new MerchRequest(new EmployeeId(0UL), MerchPack.Welcome)
             {
                 Id = id
             };

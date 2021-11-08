@@ -15,10 +15,10 @@ namespace MerchandiseService.Domain.Tests
         [Fact(DisplayName = "Равенство экземпляров")]
         public void Equality()
         {
-            Assert.Equal(new EmployeeId(0), new EmployeeId(0));
-            Assert.Equal(new EmployeeId(982347983479), new EmployeeId(982347983479));
-            Assert.NotEqual(new EmployeeId(0), new EmployeeId(982347983479));
-            Assert.NotEqual(new EmployeeId(0), new EmployeeId(1));
+            Assert.Equal(new EmployeeId(0UL), new EmployeeId(0UL));
+            Assert.Equal(new EmployeeId(982347983479UL), new EmployeeId(982347983479UL));
+            Assert.NotEqual(new EmployeeId(0UL), new EmployeeId(982347983479UL));
+            Assert.NotEqual(new EmployeeId(0UL), new EmployeeId(1UL));
         }
     }
 }
