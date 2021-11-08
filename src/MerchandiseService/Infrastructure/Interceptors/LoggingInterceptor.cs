@@ -20,8 +20,22 @@ namespace MerchandiseService.Infrastructure.Interceptors
             Logger.LogInformation(requestJson);
             
             var response = base.UnaryServerHandler(request, context, continuation);
-
-            var responseJson = JsonSerializer.Serialize(response);
+            
+            string responseJson;
+            if (response.IsFaulted)
+            {
+                responseJson = JsonSerializer.Serialize(
+                        new
+                        {
+                            response.Exception?.InnerException?.Message,
+                            Type = response.Exception?.InnerException?.GetType().FullName,
+                            response.Exception?.InnerException?.Source,
+                            response.Exception?.InnerException?.StackTrace
+                        }
+                    );
+            }
+            else
+                responseJson = JsonSerializer.Serialize(response);
             Logger.LogInformation(responseJson);
             
             return response;
