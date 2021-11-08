@@ -65,5 +65,13 @@ namespace MerchandiseService.Domain.Tests
             var id = new EmployeeId(821479);
             Assert.Equal(id, new Employee(id, new Email("good@email.com"), ClothingSize.XXL).Id);
         }
+        
+        [Fact(DisplayName = "Нельзя менять идентификатор")]
+        public void CantChangeEmployeeId()
+        {
+            var employee = new Employee(new EmployeeId(821479), new Email("good@email.com"), ClothingSize.XXL);
+            var otherId = new EmployeeId(0);
+            Assert.Throws<InvalidOperationException>(() => employee.Id = otherId);
+        }
     }
 }
