@@ -34,7 +34,7 @@ namespace MerchandiseService.Domain.Tests
         [Fact(DisplayName = "Можно задать идентификатор")]
         public void CanSetMerchRequestId()
         {
-            var id = new MerchRequestId(821479);
+            var id = new MerchRequestId(821479UL);
             var merchRequest = new MerchRequest(new EmployeeId(0UL), MerchPack.Welcome)
             {
                 Id = id
@@ -46,7 +46,7 @@ namespace MerchandiseService.Domain.Tests
         [Fact(DisplayName = "Нельзя менять идентификатор")]
         public void CantChangeMerchRequestId()
         {
-            var id = new MerchRequestId(8);
+            var id = new MerchRequestId(8UL);
             var merchRequest = new MerchRequest(new EmployeeId(0UL), MerchPack.Welcome)
             {
                 Id = id
