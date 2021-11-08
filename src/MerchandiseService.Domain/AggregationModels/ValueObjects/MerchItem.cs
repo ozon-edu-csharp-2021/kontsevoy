@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MerchandiseService.Domain.AggregationModels.Enumerations;
 using MerchandiseService.Domain.Models;
 
@@ -10,7 +11,12 @@ namespace MerchandiseService.Domain.AggregationModels.ValueObjects
         
         public PositiveQuantity Quantity { get; }
 
-        public MerchItem(MerchType type, PositiveQuantity quantity) => (MerchType, Quantity) = (type, quantity);
+        public MerchItem(MerchType type, PositiveQuantity quantity)   
+        {
+            MerchType = type ?? throw new ArgumentNullException(nameof(type), $"{nameof(type)} must be provided");
+            Quantity = quantity ?? throw new ArgumentNullException(nameof(quantity), 
+                $"{nameof(quantity)} must be provided");
+        }
         
         protected override IEnumerable<object> GetEqualityComponents() 
         {
