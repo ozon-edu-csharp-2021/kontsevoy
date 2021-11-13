@@ -7,12 +7,30 @@ namespace MerchandiseService.Domain.Models
 {
     public abstract class Enumeration : IComparable
     {
-        protected Enumeration(int id, string name) => (Id, Name) = (id, name);
+        protected internal Enumeration(int id, string name) => (Id, Name) = (id, name);
         
         public int Id { get; }
         public string Name { get; }
 
         public override string ToString() => Name;
+        
+        private static readonly Dictionary<Type, Dictionary<int, object>> Registered = new();
+
+        protected static void Register<T>(T obj) where T : Enumeration
+        {
+            var type = typeof(T);
+            if (!Registered.ContainsKey(type))
+                Registered[type] = new Dictionary<int, object>();
+            Registered[type][obj.Id] = obj;
+        }
+        
+        protected static T GetById<T>(int id) where T : Enumeration
+        {
+            var type = typeof(T);
+            if (!Registered.ContainsKey(type) || !Registered[type].ContainsKey(id))
+                throw new ArgumentException($"Invalid {nameof(id)} for {typeof(T)}: value = {id}", nameof(id));
+            return (T)Registered[type][id];
+        }
 
         public static IEnumerable<T> GetAll<T>() where T : Enumeration =>
             typeof(T).GetFields(BindingFlags.Public |
