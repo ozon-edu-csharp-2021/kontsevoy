@@ -11,6 +11,7 @@ namespace MerchandiseService.Infrastructure.Filters
             var resultObject = new
             {
                 ExceptionType = context.Exception.GetType().FullName ?? context.Exception.GetType().Name,
+                Message = context.Exception.Message,
                 StackTrace = context.Exception.StackTrace
             };
 

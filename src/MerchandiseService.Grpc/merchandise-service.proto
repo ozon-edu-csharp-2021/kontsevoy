@@ -9,7 +9,9 @@ service MerchandiseServiceGrpc {
 
 message RequestMerchRequest {
   int64 employee_id = 1;
-  MerchPackType merch_pack_type = 2;
+  string notification_email = 2;
+  ClothingSize clothing_size = 3;
+  MerchPackType merch_pack_type = 4;
 }
 
 message RequestMerchResponse {
@@ -32,4 +34,14 @@ enum MerchPackType {
   CONFERENCE_SPEAKER = 30;
   PROBATION_PERIOD_ENDING = 40;
   VETERAN = 50;
+}
+
+enum ClothingSize {
+  UNKNOWN = 0;
+  XS = 1;
+  S = 2;
+  M = 3;
+  L = 4;
+  XL = 5;
+  XXL = 6;
 }
