@@ -6,7 +6,7 @@ namespace MerchandiseService.HttpClient.Models
     public record RequestMerchRequest
     {
         public RequestMerchRequest(
-            ulong employeeId, 
+            long employeeId, 
             string notificationEmail, 
             ClothingSizeEnum clothingSize, 
             MerchType merchPackType)
@@ -17,7 +17,7 @@ namespace MerchandiseService.HttpClient.Models
             MerchPackType = merchPackType;
         }
         
-        public ulong EmployeeId { get; }
+        public long EmployeeId { get; }
         public string NotificationEmail { get; }
         public ClothingSizeEnum ClothingSize { get; }
         public MerchType MerchPackType { get; }
@@ -25,7 +25,7 @@ namespace MerchandiseService.HttpClient.Models
     
     public record RequestMerchResponse
     {
-        public RequestMerchResponse(ulong merchRequestId) => MerchRequestId = merchRequestId;
-        public ulong MerchRequestId { get; }
+        public RequestMerchResponse(long merchRequestId) => MerchRequestId = merchRequestId;
+        public long MerchRequestId { get; }
     }
 }

@@ -4,13 +4,13 @@ namespace MerchandiseService.HttpClient.Models
 {
     public record InquiryMerchRequest
     {
-        public InquiryMerchRequest(ulong employeeId, MerchType merchPackType)
+        public InquiryMerchRequest(long employeeId, MerchType merchPackType)
         {
             EmployeeId = employeeId;
             MerchPackType = merchPackType;
         }
         
-        public ulong EmployeeId { get; }
+        public long EmployeeId { get; }
         public MerchType MerchPackType { get; }
     }
     

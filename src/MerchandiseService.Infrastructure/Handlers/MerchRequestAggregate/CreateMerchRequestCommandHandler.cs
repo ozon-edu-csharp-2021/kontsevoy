@@ -9,7 +9,7 @@ using MerchandiseService.Infrastructure.Commands.MerchRequestAggregate;
 
 namespace MerchandiseService.Infrastructure.Handlers.MerchRequestAggregate
 {
-    public class CreateMerchRequestCommandHandler : IRequestHandler<CreateMerchRequestCommand, ulong>
+    public class CreateMerchRequestCommandHandler : IRequestHandler<CreateMerchRequestCommand, long>
     {
         private IMerchRequestRepository MerchRequestRepository { get; }
         private IMediator Mediator { get; }
@@ -17,7 +17,7 @@ namespace MerchandiseService.Infrastructure.Handlers.MerchRequestAggregate
         public CreateMerchRequestCommandHandler(IMerchRequestRepository merchRequestRepository, IMediator mediator) =>
             (MerchRequestRepository, Mediator) = (merchRequestRepository, mediator);
         
-        public async Task<ulong> Handle(CreateMerchRequestCommand request, CancellationToken cancellationToken)
+        public async Task<long> Handle(CreateMerchRequestCommand request, CancellationToken cancellationToken)
         {
             var employeeId = new EmployeeId(request.EmployeeId);
 

@@ -13,7 +13,7 @@ namespace MerchandiseService.Infrastructure.Stubs
         public MerchRequestRepositoryStub(IUnitOfWork unitOfWork) : base(unitOfWork) {}
         protected override MerchRequestId GenerateId()
         {
-            ulong max = 0;
+            long max = 0;
             lock (Dictionary)
             {
                 if (Dictionary.Count > 0)

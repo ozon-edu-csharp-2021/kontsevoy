@@ -8,18 +8,18 @@ service MerchandiseServiceGrpc {
 }
 
 message RequestMerchRequest {
-  uint64 employee_id = 1;
+  int64 employee_id = 1;
   string notification_email = 2;
   ClothingSize clothing_size = 3;
   MerchPackType merch_pack_type = 4;
 }
 
 message RequestMerchResponse {
-  uint64 merch_request_id = 1;
+  int64 merch_request_id = 1;
 }
 
 message InquiryMerchRequest {
-  uint64 employee_id = 1;
+  int64 employee_id = 1;
   MerchPackType merch_pack_type = 2;
 }
 

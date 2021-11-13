@@ -7,7 +7,7 @@ namespace MerchandiseService.Infrastructure.Commands.EmployeeAggregate
         /// <summary>
         /// Идентификатор сотрудника
         /// </summary>
-        public ulong EmployeeId { get; init; }
+        public long EmployeeId { get; init; }
         
         /// <summary>
         /// Адрес почты сотрудника для уведомлений
