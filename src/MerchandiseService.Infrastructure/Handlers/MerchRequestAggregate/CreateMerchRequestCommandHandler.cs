@@ -4,7 +4,7 @@ using MediatR;
 using MerchandiseService.Domain.AggregationModels.Enumerations;
 using MerchandiseService.Domain.AggregationModels.MerchRequestAggregate;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
-using MerchandiseService.Infrastructure.Commands.EmployeeAggregate;
+using MerchandiseService.Domain.Models;
 using MerchandiseService.Infrastructure.Commands.MerchRequestAggregate;
 
 namespace MerchandiseService.Infrastructure.Handlers.MerchRequestAggregate
@@ -12,30 +12,20 @@ namespace MerchandiseService.Infrastructure.Handlers.MerchRequestAggregate
     public class CreateMerchRequestCommandHandler : IRequestHandler<CreateMerchRequestCommand, long>
     {
         private IMerchRequestRepository MerchRequestRepository { get; }
-        private IMediator Mediator { get; }
 
         public CreateMerchRequestCommandHandler(IMerchRequestRepository merchRequestRepository, IMediator mediator) =>
-            (MerchRequestRepository, Mediator) = (merchRequestRepository, mediator);
+            MerchRequestRepository = merchRequestRepository;
         
         public async Task<long> Handle(CreateMerchRequestCommand request, CancellationToken cancellationToken)
         {
-            var employeeId = new EmployeeId(request.EmployeeId);
-
-            var saveEmployee = new CreateOrUpdateEmployeeCommand
-            {
-                EmployeeId = request.EmployeeId,
-                NotificationEmail = request.NotificationEmail,
-                ClothingSize = request.ClothingSize
-            };
-
-            await Mediator.Send(saveEmployee, cancellationToken);
+            var employeeId = new Id(request.EmployeeId);
+            var employeeNotificationEmail = new Email(request.NotificationEmail);
+            var employeeClothingSize = ClothingSize.GetById(request.ClothingSize);
             var merchPack = MerchPack.GetById(request.MerchPackType);
 
-            var merchRequest = new MerchRequest(employeeId, merchPack);
+            var merchRequest = new MerchRequest(employeeId, employeeNotificationEmail, employeeClothingSize, merchPack, MerchRequestStatus.Created);
 
             merchRequest = await MerchRequestRepository.CreateAsync(merchRequest, cancellationToken);
-            
-            await MerchRequestRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
             
             return merchRequest.Id.Value;
         }

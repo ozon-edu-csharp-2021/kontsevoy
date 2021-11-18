@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{3B8B234F-A896-44DC-AEDD-E879A623980B}"
 ProjectSection(SolutionItems) = preProject
 	deploy\docker-compose.yml = deploy\docker-compose.yml
+	deploy\entrypoint.sh = deploy\entrypoint.sh
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.HttpClient", "src\MerchandiseService.HttpClient\MerchandiseService.HttpClient.csproj", "{1D359D1F-3F4C-49F8-AE89-43CAF89F8CFC}"
@@ -27,6 +28,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Infrastructure", "src\MerchandiseService.Infrastructure\MerchandiseService.Infrastructure.csproj", "{76226AB6-5136-41D9-A943-6BA1AC2957C3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Domain.Tests", "tests\MerchandiseService.Domain.Tests\MerchandiseService.Domain.Tests.csproj", "{9B318882-3AEC-485E-BF72-9E1667D2806F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Migrator", "src\MerchandiseService.Migrator\MerchandiseService.Migrator.csproj", "{EC2FB6E3-BA55-4301-B0E7-D306B8746541}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +43,7 @@ Global
 		{A570AC0F-2F60-4FE6-9FE2-B7BD7E1A44B3} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
 		{76226AB6-5136-41D9-A943-6BA1AC2957C3} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
 		{9B318882-3AEC-485E-BF72-9E1667D2806F} = {84B33F89-B200-4A29-A3EB-A670C2C94024}
+		{EC2FB6E3-BA55-4301-B0E7-D306B8746541} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -66,5 +70,9 @@ Global
 		{9B318882-3AEC-485E-BF72-9E1667D2806F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B318882-3AEC-485E-BF72-9E1667D2806F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B318882-3AEC-485E-BF72-9E1667D2806F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC2FB6E3-BA55-4301-B0E7-D306B8746541}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC2FB6E3-BA55-4301-B0E7-D306B8746541}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC2FB6E3-BA55-4301-B0E7-D306B8746541}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC2FB6E3-BA55-4301-B0E7-D306B8746541}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

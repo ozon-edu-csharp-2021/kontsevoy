@@ -8,13 +8,8 @@ namespace MerchandiseService.Domain.Contracts
     /// </summary>
     /// <typeparam name="TAggregationRoot">Объект сущности для управления</typeparam>
     /// <typeparam name="TAggregationRootId">Объект идентификатора сущности для управления</typeparam>
-    public interface IRepository<TAggregationRoot, TAggregationRootId>
+    public interface IRepository<TAggregationRoot, in TAggregationRootId>
     {
-        /// <summary>
-        /// Объект <see cref="IUnitOfWork"/>
-        /// </summary>
-        IUnitOfWork UnitOfWork { get; }
-        
         /// <summary>
         /// Создать новую сущность
         /// </summary>

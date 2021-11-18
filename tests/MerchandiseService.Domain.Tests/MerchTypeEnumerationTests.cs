@@ -30,5 +30,12 @@ namespace MerchandiseService.Domain.Tests
             foreach (var value in Enumeration.GetAll<MerchType>())
                 Assert.Same(value, MerchType.GetById(value.Id));
         }
+        
+        [Fact(DisplayName = "Все предопределённые значения можно получить через GetByName")]
+        public void GetByNameWorks()
+        {
+            foreach (var value in Enumeration.GetAll<MerchType>())
+                Assert.Same(value, MerchType.GetByName(value.Name));
+        }
     }
 }

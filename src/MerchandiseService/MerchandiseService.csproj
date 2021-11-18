@@ -13,6 +13,10 @@
       <NoWarn>1591;1701;1702</NoWarn>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <NoWarn>1591;1701;1702</NoWarn>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
@@ -23,6 +27,7 @@
       <ProjectReference Include="..\MerchandiseService.Grpc\MerchandiseService.Grpc.csproj" />
       <ProjectReference Include="..\MerchandiseService.HttpClient\MerchandiseService.HttpClient.csproj" />
       <ProjectReference Include="..\MerchandiseService.Infrastructure\MerchandiseService.Infrastructure.csproj" />
+      <ProjectReference Include="..\MerchandiseService.Migrator\MerchandiseService.Migrator.csproj" />
     </ItemGroup>
 
 </Project>

@@ -30,6 +30,7 @@ namespace MerchandiseService.Infrastructure.Extensions
                     options.IncludeXmlComments(xmlFilePath);
                 });
                 services.AddInfrastructureServices();
+                services.AddDatabaseComponents();
                 services.AddInfrastructureRepositories();
                 services.AddGrpc(options => options.Interceptors.Add<LoggingInterceptor>());
             });
