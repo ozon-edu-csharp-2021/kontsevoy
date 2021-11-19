@@ -22,13 +22,20 @@ namespace MerchandiseService.Domain.Models
             var type = typeof(T);
             if (RegisteredIds.ContainsKey(type)) return;
             
-            RegisteredIds[type] = new Dictionary<int, object>();
-            RegisteredNames[type] = new Dictionary<string, object>();
-
-            foreach (var obj in GetAll<T>())
+            lock (RegisteredIds)
             {
-                RegisteredIds[type][obj.Id] = obj;
-                RegisteredNames[type][obj.Name.ToLowerInvariant()] = obj;
+                if (RegisteredIds.ContainsKey(type)) return;
+                
+                var ids = new Dictionary<int, object>();
+                var names = new Dictionary<string, object>();
+
+                foreach (var obj in GetAll<T>())
+                {
+                    ids[obj.Id] = obj;
+                    names[obj.Name.ToLowerInvariant()] = obj;
+                }
+                RegisteredNames[type] = names;
+                RegisteredIds[type] = ids;
             }
         }
         
