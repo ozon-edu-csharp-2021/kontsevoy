@@ -25,7 +25,7 @@ namespace MerchandiseService.Migrator.Migrations
                         .WithColumnDescription("Размер одежды сотрудника (для выбора состава мерчпака)")
                     .WithColumn("merch_pack_id").AsInt64().NotNullable()
                     .WithColumn("status").AsString().NotNullable()
-                    .WithColumn("try_handout_at").AsDateTime().NotNullable()
+                    .WithColumn("try_handout_at").AsDateTime().Nullable()
                         .WithDefault(SystemMethods.CurrentDateTime)
                         .WithColumnDescription("Дата последней попытки выдать мерч")
                     .WithColumn("handout_at").AsDateTime().Nullable()

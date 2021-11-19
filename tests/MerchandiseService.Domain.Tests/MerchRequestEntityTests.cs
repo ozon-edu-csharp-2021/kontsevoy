@@ -11,14 +11,13 @@ namespace MerchandiseService.Domain.Tests
         [Fact(DisplayName = "Нельзя создать с null аргументами")]
         public void ConstructorDontAcceptNullArguments()
         {
-            Assert.Throws<ArgumentNullException>(() => new MerchRequest(null, null, null, null, null));
-            Assert.Throws<ArgumentNullException>(() => new MerchRequest(null, null, null, MerchPack.Veteran, null));
-            Assert.Throws<ArgumentNullException>(() => new MerchRequest(new Id(1), null, null, null, null));
-            Assert.Throws<ArgumentNullException>(() => new MerchRequest(new Id(1), new Email("e@mail.ru"), ClothingSize.L, MerchPack.Welcome, null));
-            Assert.Throws<ArgumentNullException>(() => new MerchRequest(null, new Email("e@mail.ru"), ClothingSize.L, MerchPack.Welcome, MerchRequestStatus.Created));
-            Assert.Throws<ArgumentNullException>(() => new MerchRequest(new Id(1), null, ClothingSize.L, MerchPack.Welcome, MerchRequestStatus.Created));
-            Assert.Throws<ArgumentNullException>(() => new MerchRequest(new Id(1), new Email("e@mail.ru"), null, MerchPack.Welcome, MerchRequestStatus.Created));
-            Assert.Throws<ArgumentNullException>(() => new MerchRequest(new Id(1), new Email("e@mail.ru"), ClothingSize.XL, null, MerchRequestStatus.Created));
+            Assert.Throws<ArgumentNullException>(() => MerchRequest.New(null, null, null, null, null));
+            Assert.Throws<ArgumentNullException>(() => MerchRequest.New(null, null, null, null, MerchPack.Veteran));
+            Assert.Throws<ArgumentNullException>(() => MerchRequest.New(null, new Id(1), null, null, null));
+            Assert.Throws<ArgumentNullException>(() => MerchRequest.New(CreationTimestamp.Now, null, new Email("e@mail.ru"), ClothingSize.L, MerchPack.Welcome));
+            Assert.Throws<ArgumentNullException>(() => MerchRequest.New(CreationTimestamp.Now, new Id(1), null, ClothingSize.L, MerchPack.Welcome));
+            Assert.Throws<ArgumentNullException>(() => MerchRequest.New(CreationTimestamp.Now, new Id(1), new Email("e@mail.ru"), null, MerchPack.Welcome));
+            Assert.Throws<ArgumentNullException>(() => MerchRequest.New(CreationTimestamp.Now, new Id(1), new Email("e@mail.ru"), ClothingSize.XL, null));
         }
         
         // [Fact(DisplayName = "Можно получить переданный идентификатор сотрудника")]

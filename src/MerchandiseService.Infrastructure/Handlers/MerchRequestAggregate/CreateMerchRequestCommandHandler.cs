@@ -4,7 +4,6 @@ using MediatR;
 using MerchandiseService.Domain.AggregationModels.Enumerations;
 using MerchandiseService.Domain.AggregationModels.MerchRequestAggregate;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
-using MerchandiseService.Domain.Models;
 using MerchandiseService.Infrastructure.Commands.MerchRequestAggregate;
 
 namespace MerchandiseService.Infrastructure.Handlers.MerchRequestAggregate
@@ -23,7 +22,7 @@ namespace MerchandiseService.Infrastructure.Handlers.MerchRequestAggregate
             var employeeClothingSize = ClothingSize.GetById(request.ClothingSize);
             var merchPack = MerchPack.GetById(request.MerchPackType);
 
-            var merchRequest = new MerchRequest(employeeId, employeeNotificationEmail, employeeClothingSize, merchPack, MerchRequestStatus.Created);
+            var merchRequest = MerchRequest.New(CreationTimestamp.Now, employeeId, employeeNotificationEmail, employeeClothingSize, merchPack);
 
             merchRequest = await MerchRequestRepository.CreateAsync(merchRequest, cancellationToken);
             

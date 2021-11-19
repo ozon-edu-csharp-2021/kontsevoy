@@ -19,5 +19,8 @@ namespace MerchandiseService.Domain.AggregationModels.Enumerations
         public static MerchType GetById(int id) => Enumeration.GetById<MerchType>(id);
         
         public static MerchType GetByName(string name) => Enumeration.GetByName<MerchType>(name);
+        
+        public static implicit operator MerchType(int value) => GetById(value);
+        public static implicit operator MerchType(string value) => GetByName(value);
     }
 }

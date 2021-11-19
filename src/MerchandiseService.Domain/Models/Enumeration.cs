@@ -76,5 +76,7 @@ namespace MerchandiseService.Domain.Models
             (left is null == right is null) && (left is null || left.Equals(right));
 
         public static bool operator !=(Enumeration left, Enumeration right) => !(left == right);
+        
+        public static implicit operator string(Enumeration value) => value?.Name;
     }
 }

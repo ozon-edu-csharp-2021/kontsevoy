@@ -38,6 +38,7 @@ namespace MerchandiseService.Infrastructure.Extensions
         /// <param name="services">Объект <see cref="IServiceCollection"/></param>
         public static void AddInfrastructureRepositories(this IServiceCollection services)
         {
+            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
             services.AddScoped<IMerchRequestRepository, MerchRequestRepository>();
         }
     }

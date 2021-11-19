@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
@@ -6,6 +7,7 @@ using MerchandiseService.Domain.AggregationModels.Enumerations;
 using MerchandiseService.Domain.AggregationModels.MerchRequestAggregate;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
 using MerchandiseService.Infrastructure.Repositories.Infrastructure.Interfaces;
+using MerchandiseService.Infrastructure.Repositories.Models;
 using Npgsql;
 
 namespace MerchandiseService.Infrastructure.Repositories.Implementation
@@ -23,6 +25,36 @@ namespace MerchandiseService.Infrastructure.Repositories.Implementation
             ChangeTracker = changeTracker;
         }
 
+        private static T Build<T>(MerchRequestDto dto) => (T)Activator.CreateInstance(typeof(T),
+            BindingFlags.Instance | BindingFlags.NonPublic, null, new object[]
+            {
+                (Id)dto.Id,
+                (CreationTimestamp)dto.CreatedAt,
+                (Id)dto.EmployeeId,
+                (Email)dto.EmployeeNotificationEmail,
+                (ClothingSize)dto.EmployeeClothingSize,
+                (MerchPack)dto.MerchPackId,
+                (MerchRequestStatus)dto.Status,
+                (HandoutTimestamp)dto.TryHandoutAt,
+                (HandoutTimestamp)dto.HandoutAt,
+                (Handout)dto.Handout
+            }, null);
+
+        private async Task<MerchRequest> QuerySingleAndTrack(string sql, object parameters,
+            CancellationToken cancellationToken)
+        {
+            var commandDefinition = new CommandDefinition(
+                sql,
+                parameters: parameters,
+                commandTimeout: Timeout,
+                cancellationToken: cancellationToken);
+            var connection = await DbConnectionFactory.CreateConnection(cancellationToken);
+            var dto = await connection.QuerySingleAsync<MerchRequestDto>(commandDefinition);
+            var merchRequest = Build<MerchRequest>(dto);
+            ChangeTracker.Track(merchRequest);
+            return merchRequest;
+        }
+
         public async Task<MerchRequest> CreateAsync(MerchRequest itemToCreate, CancellationToken cancellationToken)
         {
             if (itemToCreate is null)
@@ -32,38 +64,42 @@ namespace MerchandiseService.Infrastructure.Repositories.Implementation
                 throw new ArgumentException($"{nameof(itemToCreate)} entity must be transient", nameof(itemToCreate));
             
             const string sql = @"INSERT INTO merch_requests
-                (employee_id, employee_notification_email, employee_clothing_size, merch_pack_id, status)
-	            VALUES (@EmployeeId, @EmployeeNotificationEmail, @EmployeeClothingSize, @MerchPackId, @Status)
-	            RETURNING id;";
+                (created_at, employee_id, employee_notification_email, employee_clothing_size, merch_pack_id, status, try_handout_at, handout_at, handout)
+	            VALUES (@CreatedAt, @EmployeeId, @EmployeeNotificationEmail, @EmployeeClothingSize, @MerchPackId, @Status, @TryHandoutAt, @HandoutAt, @Handout::jsonb)
+	            RETURNING *;";
             
-            var parameters = new
-            {
-                EmployeeId = itemToCreate.EmployeeId.Value,
-                EmployeeNotificationEmail = itemToCreate.EmployeeNotificationEmail.Value,
-                EmployeeClothingSize = itemToCreate.EmployeeClothingSize.Name,
-                MerchPackId = itemToCreate.MerchPack.Id,
-                Status = itemToCreate.Status.Name
-            };
-            var commandDefinition = new CommandDefinition(
-                sql,
-                parameters: parameters,
-                commandTimeout: Timeout,
-                cancellationToken: cancellationToken);
-            var connection = await DbConnectionFactory.CreateConnection(cancellationToken);
-            var id = await connection.QueryFirstAsync<int>(commandDefinition);
-            itemToCreate.Id = new Id(id);
-            ChangeTracker.Track(itemToCreate);
-            return itemToCreate;
+            return await QuerySingleAndTrack(sql, MerchRequestDto.From(itemToCreate), cancellationToken);
         }
 
-        public Task<MerchRequest> UpdateAsync(MerchRequest itemToUpdate, CancellationToken cancellationToken = default)
+        public async Task<MerchRequest> UpdateAsync(MerchRequest itemToUpdate, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            if (itemToUpdate is null)
+                throw new ArgumentNullException(nameof(itemToUpdate), $"{nameof(itemToUpdate)} must be provided");
+            
+            if (itemToUpdate.IsTransient)
+                throw new ArgumentException($"{nameof(itemToUpdate)} entity must not be transient", nameof(itemToUpdate));
+            
+            const string sql = @"UPDATE merch_requests SET
+                employee_notification_email = @EmployeeNotificationEmail,
+                employee_clothing_size = @EmployeeClothingSize,
+                status = @Status,
+                try_handout_at = @TryHandoutAt,
+                handout_at = @HandoutAt,
+                handout = @Handout::jsonb
+                WHERE id = @Id
+	            RETURNING *;";
+            
+            return await QuerySingleAndTrack(sql, MerchRequestDto.From(itemToUpdate), cancellationToken);
         }
 
-        public Task<MerchRequest> FindByIdAsync(Id id, CancellationToken cancellationToken = default)
+        public async Task<MerchRequest> FindByIdAsync(Id id, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            if (id is null)
+                throw new ArgumentNullException(nameof(id), $"{nameof(id)} must be provided");
+            
+            const string sql = @"SELECT * FROM merch_requests WHERE id = @Id;";
+            
+            return await QuerySingleAndTrack(sql, new { Id = id.Value }, cancellationToken);
         }
 
         public async Task<bool> ContainsByParamsAsync(Id employeeId, MerchPack merchPack, CancellationToken cancellationToken = default)
