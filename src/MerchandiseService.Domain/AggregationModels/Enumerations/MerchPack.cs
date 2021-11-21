@@ -17,9 +17,15 @@ namespace MerchandiseService.Domain.AggregationModels.Enumerations
 
         public ReadOnlyCollection<MerchItem> Items { get; init; }
 
-        protected MerchPack(int id, string name) : base(id, name) => Register(this);
+        protected MerchPack(int id, string name) : base(id, name) {}
 
         public static MerchPack GetById(int id) => Enumeration.GetById<MerchPack>(id);
+        
+        public static MerchPack GetByName(string name) => Enumeration.GetByName<MerchPack>(name);
+        
+        public static implicit operator MerchPack(int value) => GetById(value);
+        public static implicit operator MerchPack(long value) => GetById((int)value);
+        public static implicit operator MerchPack(string value) => value is null ? null : GetByName(value);
     }
     
     public static class Extension

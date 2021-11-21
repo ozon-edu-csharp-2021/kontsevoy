@@ -11,5 +11,7 @@ namespace MerchandiseService.Domain.AggregationModels.ValueObjects
                 throw new ArgumentOutOfRangeException(nameof(value),
                     $"{nameof(value)} of {nameof(NonNegativeQuantity)} must not be less than zero");
         }
+        
+        public static implicit operator NonNegativeQuantity(int value) => new(value);
     }
 }

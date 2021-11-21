@@ -3,13 +3,15 @@ using MerchandiseService.Domain.Models;
 
 namespace MerchandiseService.Domain.AggregationModels.ValueObjects
 {
-    public class EmployeeId : ValueObject<long>
+    public class Id : ValueObject<long>
     {
-        public EmployeeId(long value) : base(value)
+        public Id(long value) : base(value)
         {
             if (value <= 0)
                 throw new ArgumentOutOfRangeException(nameof(value),
-                    $"{nameof(value)} of {nameof(EmployeeId)} must be greater than zero");
+                    $"{nameof(value)} of {nameof(Id)} must be greater than zero");
         }
+
+        public static implicit operator Id(long value) => new(value);
     }
 }

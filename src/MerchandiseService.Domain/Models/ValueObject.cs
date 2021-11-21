@@ -37,4 +37,11 @@ namespace MerchandiseService.Domain.Models
 
         public override string ToString() => Value?.ToString();
     }
+
+    public abstract class ClassValueObject<T> : ValueObject<T> where T : class, IComparable
+    {
+        public ClassValueObject(T value) : base(value) {}
+        
+        public static implicit operator T(ClassValueObject<T> value) => value?.Value;
+    }
 }

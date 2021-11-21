@@ -14,22 +14,48 @@ namespace MerchandiseService.Domain.Models
 
         public override string ToString() => Name;
         
-        private static readonly Dictionary<Type, Dictionary<int, object>> Registered = new();
+        private static readonly Dictionary<Type, Dictionary<int, object>> RegisteredIds = new();
+        private static readonly Dictionary<Type, Dictionary<string, object>> RegisteredNames = new();
 
-        protected static void Register<T>(T obj) where T : Enumeration
+        private static void RegisterIfNotExists<T>() where T : Enumeration
         {
             var type = typeof(T);
-            if (!Registered.ContainsKey(type))
-                Registered[type] = new Dictionary<int, object>();
-            Registered[type][obj.Id] = obj;
+            if (RegisteredIds.ContainsKey(type)) return;
+            
+            lock (RegisteredIds)
+            {
+                if (RegisteredIds.ContainsKey(type)) return;
+                
+                var ids = new Dictionary<int, object>();
+                var names = new Dictionary<string, object>();
+
+                foreach (var obj in GetAll<T>())
+                {
+                    ids[obj.Id] = obj;
+                    names[obj.Name.ToLowerInvariant()] = obj;
+                }
+                RegisteredNames[type] = names;
+                RegisteredIds[type] = ids;
+            }
         }
         
         protected static T GetById<T>(int id) where T : Enumeration
         {
+            RegisterIfNotExists<T>();
             var type = typeof(T);
-            if (!Registered.ContainsKey(type) || !Registered[type].ContainsKey(id))
+            if (!RegisteredIds[type].ContainsKey(id))
                 throw new ArgumentException($"Invalid {nameof(id)} for {typeof(T)}: value = {id}", nameof(id));
-            return (T)Registered[type][id];
+            return (T)RegisteredIds[type][id];
+        }
+        
+        protected static T GetByName<T>(string name) where T : Enumeration
+        {
+            RegisterIfNotExists<T>();
+            var type = typeof(T);
+            var name_lower = name?.ToLowerInvariant();
+            if (name_lower == null || !RegisteredNames[type].ContainsKey(name_lower))
+                throw new ArgumentException($"Invalid {nameof(name)} for {typeof(T)}: value = {name}", nameof(name));
+            return (T)RegisteredNames[type][name_lower];
         }
 
         public static IEnumerable<T> GetAll<T>() where T : Enumeration =>
@@ -50,5 +76,7 @@ namespace MerchandiseService.Domain.Models
             (left is null == right is null) && (left is null || left.Equals(right));
 
         public static bool operator !=(Enumeration left, Enumeration right) => !(left == right);
+        
+        public static implicit operator string(Enumeration value) => value?.Name;
     }
 }

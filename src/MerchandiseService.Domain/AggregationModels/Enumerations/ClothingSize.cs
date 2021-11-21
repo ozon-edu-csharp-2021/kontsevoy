@@ -11,8 +11,13 @@ namespace MerchandiseService.Domain.AggregationModels.Enumerations
         public static readonly ClothingSize XL = new(5, nameof(XL));
         public static readonly ClothingSize XXL = new(6, nameof(XXL));
 
-        private ClothingSize(int id, string name) : base(id, name) => Register(this);
+        private ClothingSize(int id, string name) : base(id, name) {}
         
         public static ClothingSize GetById(int id) => Enumeration.GetById<ClothingSize>(id);
+        
+        public static ClothingSize GetByName(string name) => Enumeration.GetByName<ClothingSize>(name);
+        
+        public static implicit operator ClothingSize(int value) => GetById(value);
+        public static implicit operator ClothingSize(string value) => GetByName(value);
     }
 }

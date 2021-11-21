@@ -8,10 +8,10 @@ using MerchandiseService.Domain.Contracts;
 
 namespace MerchandiseService.Infrastructure.Stubs
 {
-    public class MerchRequestRepositoryStub : EntityRepositoryStub<MerchRequest, MerchRequestId>, IMerchRequestRepository
+    public class MerchRequestRepositoryStub : EntityRepositoryStub<MerchRequest, Id>, IMerchRequestRepository
     {
         public MerchRequestRepositoryStub(IUnitOfWork unitOfWork) : base(unitOfWork) {}
-        protected override MerchRequestId GenerateId()
+        protected override Id GenerateId()
         {
             long max = 0;
             lock (Dictionary)
@@ -20,10 +20,10 @@ namespace MerchandiseService.Infrastructure.Stubs
                     max = Dictionary.Keys.Select(f => f.Value).Max();
             }
 
-            return new MerchRequestId(max + 1);
+            return new Id(max + 1);
         }
 
-        public Task<bool> ContainsByParamsAsync(EmployeeId employeeId, MerchPack merchPack, CancellationToken cancellationToken = default)
+        public Task<bool> ContainsByParamsAsync(Id employeeId, MerchPack merchPack, CancellationToken cancellationToken = default)
         {
             bool result;
             lock (Dictionary)

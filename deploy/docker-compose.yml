@@ -4,9 +4,22 @@ services:
   merchandise-service:
     container_name: MerchandiseService
     hostname: merchandise_service
-    build:
-      context: ..
-      dockerfile: Dockerfile
+    build: ..
+    environment:
+      DatabaseConnectionOptions__ConnectionString: "Host=host.docker.internal;Port=5427;Database=merchandise-service;Username=postgres;Password=WQs4##!k7qi0TV0B8!LC3c74pI@oPc#!"
+    depends_on:
+      - merchandise-service-db
+        
+  merchandise-service-db:
+    image: postgres:latest
+    container_name: MerchandiseServiceDb
+    ports:
+      - "5427:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: WQs4##!k7qi0TV0B8!LC3c74pI@oPc#!
+      POSTGRES_DB: merchandise-service
+    command: "-c log_statement=all"
       
   stock-api:
     image: 'ghcr.io/ozon-edu-csharp-2021/stock-api:main'
@@ -14,8 +27,6 @@ services:
     hostname: stock_api
     ports:
       - "8080:80"
-    depends_on:
-      - redis
     
   emailing-service:
     image: 'ghcr.io/ozon-edu-csharp-2021/emailing-service:main'
@@ -31,8 +42,3 @@ services:
     image: 'ghcr.io/ozon-edu-csharp-2021/employees-service:main'
     container_name: EmployeesService
     hostname: employees_service
-
-  redis:
-    image: redis
-    container_name: redis
-    hostname: redis

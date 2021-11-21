@@ -1,11 +1,12 @@
 ﻿using MediatR;
-using MerchandiseService.Domain.AggregationModels.EmployeeAggregate;
 using MerchandiseService.Domain.AggregationModels.MerchRequestAggregate;
 using MerchandiseService.Domain.Contracts;
-using MerchandiseService.Infrastructure.Handlers.EmployeeAggregate;
 using MerchandiseService.Infrastructure.Handlers.MerchRequestAggregate;
-using MerchandiseService.Infrastructure.Stubs;
+using MerchandiseService.Infrastructure.Repositories.Implementation;
+using MerchandiseService.Infrastructure.Repositories.Infrastructure;
+using MerchandiseService.Infrastructure.Repositories.Infrastructure.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
 
 namespace MerchandiseService.Infrastructure.Extensions
 {
@@ -17,29 +18,28 @@ namespace MerchandiseService.Infrastructure.Extensions
         /// <summary>
         /// Добавление в DI контейнер инфраструктурных сервисов
         /// </summary>
-        /// <param name="services">Объект IServiceCollection</param>
-        /// <returns>Объект <see cref="IServiceCollection"/></returns>
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
+        /// <param name="services">Объект <see cref="IServiceCollection"/></param>
+        public static void AddInfrastructureServices(this IServiceCollection services)
         {
-            services.AddMediatR(typeof(CreateOrUpdateEmployeeCommandHandler).Assembly);
             services.AddMediatR(typeof(CreateMerchRequestCommandHandler).Assembly);
             services.AddMediatR(typeof(InquiryMerchRequestQueryHandler).Assembly);
-            
-            return services;
+        }
+        
+        public static void AddDatabaseComponents(this IServiceCollection services)
+        {
+            services.AddScoped<IDbConnectionFactory<NpgsqlConnection>, NpgsqlConnectionFactory>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IChangeTracker, ChangeTracker>();
         }
 
         /// <summary>
         /// Добавление в DI контейнер инфраструктурных репозиториев
         /// </summary>
-        /// <param name="services">Объект IServiceCollection</param>
-        /// <returns>Объект <see cref="IServiceCollection"/></returns>
-        public static IServiceCollection AddInfrastructureRepositories(this IServiceCollection services)
+        /// <param name="services">Объект <see cref="IServiceCollection"/></param>
+        public static void AddInfrastructureRepositories(this IServiceCollection services)
         {
-            services.AddTransient<IUnitOfWork, UnitOfWorkStub>();
-            services.AddTransient<IEmployeeRepository, EmployeeRepositoryStub>();
-            services.AddTransient<IMerchRequestRepository, MerchRequestRepositoryStub>();
-            
-            return services;
+            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+            services.AddScoped<IMerchRequestRepository, MerchRequestRepository>();
         }
     }
 }

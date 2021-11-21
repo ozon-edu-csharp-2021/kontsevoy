@@ -14,12 +14,13 @@ namespace MerchandiseService.Domain.AggregationModels.Enumerations
         
         public MerchKind Kind { get; }
 
-        private MerchType(int id, string name, [NotNull] MerchKind kind) : base(id, name)
-        {
-            Kind = kind;
-            Register(this);
-        }
+        private MerchType(int id, string name, [NotNull] MerchKind kind) : base(id, name) => Kind = kind;
         
         public static MerchType GetById(int id) => Enumeration.GetById<MerchType>(id);
+        
+        public static MerchType GetByName(string name) => Enumeration.GetByName<MerchType>(name);
+        
+        public static implicit operator MerchType(int value) => GetById(value);
+        public static implicit operator MerchType(string value) => GetByName(value);
     }
 }
