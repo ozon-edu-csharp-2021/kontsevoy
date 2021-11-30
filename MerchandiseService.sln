@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Domain.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Migrator", "src\MerchandiseService.Migrator\MerchandiseService.Migrator.csproj", "{EC2FB6E3-BA55-4301-B0E7-D306B8746541}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Domain.Base", "src\MerchandiseService.Domain.Base\MerchandiseService.Domain.Base.csproj", "{76A53345-4C19-4401-B1D5-C36EDEE63C1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,7 @@ Global
 		{76226AB6-5136-41D9-A943-6BA1AC2957C3} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
 		{9B318882-3AEC-485E-BF72-9E1667D2806F} = {84B33F89-B200-4A29-A3EB-A670C2C94024}
 		{EC2FB6E3-BA55-4301-B0E7-D306B8746541} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
+		{76A53345-4C19-4401-B1D5-C36EDEE63C1B} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -74,5 +77,9 @@ Global
 		{EC2FB6E3-BA55-4301-B0E7-D306B8746541}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC2FB6E3-BA55-4301-B0E7-D306B8746541}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC2FB6E3-BA55-4301-B0E7-D306B8746541}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76A53345-4C19-4401-B1D5-C36EDEE63C1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76A53345-4C19-4401-B1D5-C36EDEE63C1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76A53345-4C19-4401-B1D5-C36EDEE63C1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76A53345-4C19-4401-B1D5-C36EDEE63C1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

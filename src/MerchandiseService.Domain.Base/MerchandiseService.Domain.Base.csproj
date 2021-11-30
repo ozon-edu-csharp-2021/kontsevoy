@@ -5,12 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="CSharpCourse.Core.Lib" Version="1.4.0" />
       <PackageReference Include="MediatR" Version="9.0.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\MerchandiseService.Domain.Base\MerchandiseService.Domain.Base.csproj" />
     </ItemGroup>
 
 </Project>
