@@ -2,9 +2,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
 using MerchandiseService.Domain.Models;
-using MerchandiseService.Infrastructure.Repositories.Infrastructure.Interfaces;
+using MerchandiseService.Infrastructure.Database.Repositories.Infrastructure.Interfaces;
 
-namespace MerchandiseService.Infrastructure.Repositories.Infrastructure
+namespace MerchandiseService.Infrastructure.Database.Repositories.Infrastructure
 {
     public class ChangeTracker : IChangeTracker
     {

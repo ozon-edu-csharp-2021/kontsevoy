@@ -1,12 +1,12 @@
 using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
-using MerchandiseService.Infrastructure.Configuration;
-using MerchandiseService.Infrastructure.Repositories.Infrastructure.Interfaces;
+using MerchandiseService.Infrastructure.Database.Configuration;
+using MerchandiseService.Infrastructure.Database.Repositories.Infrastructure.Interfaces;
 using Microsoft.Extensions.Options;
 using Npgsql;
 
-namespace MerchandiseService.Infrastructure.Repositories.Infrastructure
+namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Infrastructure
 {
     public class NpgsqlConnectionFactory : IDbConnectionFactory<NpgsqlConnection>
     {

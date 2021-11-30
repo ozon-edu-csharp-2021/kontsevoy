@@ -1,6 +1,6 @@
 using MediatR;
 using MerchandiseService.GrpcServices;
-using MerchandiseService.Infrastructure.Configuration;
+using MerchandiseService.Infrastructure.Database.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

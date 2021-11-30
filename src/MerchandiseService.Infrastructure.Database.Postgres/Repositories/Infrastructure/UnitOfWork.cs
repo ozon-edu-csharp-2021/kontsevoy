@@ -1,15 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using MerchandiseService.Domain.Contracts;
-using MerchandiseService.Infrastructure.Repositories.Infrastructure.Exceptions;
-using MerchandiseService.Infrastructure.Repositories.Infrastructure.Interfaces;
+using MerchandiseService.Infrastructure.Database.Postgres.Repositories.Infrastructure.Exceptions;
+using MerchandiseService.Infrastructure.Database.Repositories.Infrastructure.Interfaces;
 using Npgsql;
 
-namespace MerchandiseService.Infrastructure.Repositories.Infrastructure
+namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Infrastructure
 {
     public class UnitOfWork : IUnitOfWork
     {

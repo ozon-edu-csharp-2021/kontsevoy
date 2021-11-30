@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
 using MerchandiseService.Domain.Models;
 
-namespace MerchandiseService.Infrastructure.Repositories.Infrastructure.Interfaces
+namespace MerchandiseService.Infrastructure.Database.Repositories.Infrastructure.Interfaces
 {
     /// <summary>
     /// Компонент, ответственный за хранение ссылок на сущности, которые были затронуты в рамках выполнения запроса.

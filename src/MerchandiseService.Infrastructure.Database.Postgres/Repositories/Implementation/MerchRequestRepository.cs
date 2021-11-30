@@ -6,11 +6,11 @@ using Dapper;
 using MerchandiseService.Domain.AggregationModels.Enumerations;
 using MerchandiseService.Domain.AggregationModels.MerchRequestAggregate;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
-using MerchandiseService.Infrastructure.Repositories.Infrastructure.Interfaces;
+using MerchandiseService.Infrastructure.Database.Repositories.Infrastructure.Interfaces;
 using MerchandiseService.Infrastructure.Repositories.Models;
 using Npgsql;
 
-namespace MerchandiseService.Infrastructure.Repositories.Implementation
+namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Implementation
 {
     public class MerchRequestRepository : IMerchRequestRepository
     {

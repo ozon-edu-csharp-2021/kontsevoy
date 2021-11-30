@@ -1,4 +1,4 @@
-namespace MerchandiseService.Infrastructure.Configuration
+namespace MerchandiseService.Infrastructure.Database.Configuration
 {
     public class DatabaseConnectionOptions
     {

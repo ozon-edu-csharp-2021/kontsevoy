@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MerchandiseService.Infrastructure.Repositories.Infrastructure.Interfaces
+namespace MerchandiseService.Infrastructure.Database.Repositories.Infrastructure.Interfaces
 {
     /// <summary>
     /// Фабрика подключений к базе данных.
