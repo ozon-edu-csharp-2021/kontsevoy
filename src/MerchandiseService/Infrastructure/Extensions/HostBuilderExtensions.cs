@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using MerchandiseService.HostedServices;
 using MerchandiseService.Infrastructure.Database.Postgres.Extensions;
 using MerchandiseService.Infrastructure.Filters;
 using MerchandiseService.Infrastructure.Interceptors;
+using MerchandiseService.Infrastructure.Kafka.Extensions;
 using MerchandiseService.Infrastructure.StartupFilters;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +20,9 @@ namespace MerchandiseService.Infrastructure.Extensions
         {
             builder.ConfigureServices(services =>
             {
+                //Alive endpoints
                 services.AddSingleton<IStartupFilter, AliveStartupFilter>();
+                //Swagger
                 services.AddSingleton<IStartupFilter, SwaggerStartupFilter>();
                 services.AddSwaggerGen(options =>
                 {
@@ -30,10 +34,19 @@ namespace MerchandiseService.Infrastructure.Extensions
                     var xmlFilePath = Path.Combine(AppContext.BaseDirectory, xmlFileName);
                     options.IncludeXmlComments(xmlFilePath);
                 });
+                //Infrastructure
                 services.AddInfrastructureServices();
+                //Database
                 services.AddDatabaseComponents();
                 services.AddInfrastructureRepositories();
+                //Kafka
+                services.AddMessageBroker();
+                services.AddHostedService<StockReplenishedConsumerHostedService>();
+                //Grpc
                 services.AddGrpc(options => options.Interceptors.Add<LoggingInterceptor>());
+                //MerchRequest handlers
+                services.AddHostedService<AcceptorHostedService>();
+                services.AddHostedService<ProcessorHostedService>();
             });
             return builder;
         }

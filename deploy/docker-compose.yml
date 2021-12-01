@@ -12,9 +12,18 @@ services:
       - ozon-network
     environment:
       DatabaseConnectionOptions__ConnectionString: "Host=merchandise-service-db;Port=5432;Database=merchandise-service;Username=postgres;Password=WQs4##!k7qi0TV0B8!LC3c74pI@oPc#!"
+      StockApiGrpcServiceConfiguration__ServerAddress: "http://stock-api:82"
+      KafkaConfiguration__BootstrapServers: "broker:29092"
+      KafkaConfiguration__ReplenishedTopic: "stock_replenished_event"
+      KafkaConfiguration__ReplenishedGroup: "replenished"
+      KafkaConfiguration__EmailNotificationTopic: "email_notification_event"
+      KafkaConfiguration__EmployeeNotificationTopic: "employee_notification_event"
+      KafkaConfiguration__EmployeeNotificationGroup: "employee"
     depends_on:
       - merchandise-service-db
       - stock-api
+      - zookeeper
+      - broker
         
   merchandise-service-db:
     image: postgres:latest
@@ -35,12 +44,16 @@ services:
     container_name: StockApi
     hostname: stock_api
     ports:
-      - "5070:5000"
-      - "5072:5002"
+      - "5070:80"
+      - "5072:82"
     networks:
       - ozon-network
     environment:
       DatabaseConnectionOptions__ConnectionString: "Host=stock-api-db;Port=5432;Database=stock-api;Username=postgres;Password=stockApiPassword"
+      BootstrapServers: "broker:29092"
+      topic: "stock_replenished_event"
+      groupId: "stock-api-service"
+      SupplyApiGrpcServiceConfiguration__ServerAddress: "http://localhost:5082"
     depends_on:
       - stock-api-db
       - redis

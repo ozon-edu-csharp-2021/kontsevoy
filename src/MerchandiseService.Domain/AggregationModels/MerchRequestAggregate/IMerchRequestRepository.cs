@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using MerchandiseService.Domain.AggregationModels.Enumerations;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
@@ -19,5 +20,13 @@ namespace MerchandiseService.Domain.AggregationModels.MerchRequestAggregate
         /// <param name="cancellationToken">Токен для отмены операции. <see cref="CancellationToken"/></param>
         /// <returns>true, если нашёлся запрос на комплект для заданного сотрудника, иначе false</returns>
         Task<bool> ContainsByParamsAsync(Id employeeId, MerchPack merchPack, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Получить все сущности по статусу
+        /// </summary>
+        /// <param name="status">Статус запроса. <see cref="MerchRequestStatus"/></param>
+        /// <param name="cancellationToken">Токен для отмены операции. <see cref="CancellationToken"/></param>
+        /// <returns>Коллекция сущностей в указанном статусе</returns>
+        Task<IReadOnlyCollection<MerchRequest>> FindByStatus(MerchRequestStatus status, CancellationToken cancellationToken = default);
     }
 }

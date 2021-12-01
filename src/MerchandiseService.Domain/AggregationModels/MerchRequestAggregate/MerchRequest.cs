@@ -1,6 +1,7 @@
 ﻿using System;
 using MerchandiseService.Domain.AggregationModels.Enumerations;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
+using MerchandiseService.Domain.Exceptions;
 using MerchandiseService.Domain.Models;
 
 namespace MerchandiseService.Domain.AggregationModels.MerchRequestAggregate
@@ -63,9 +64,20 @@ namespace MerchandiseService.Domain.AggregationModels.MerchRequestAggregate
         public Email EmployeeNotificationEmail { get; }
         public ClothingSize EmployeeClothingSize { get; }
         public MerchPack MerchPack { get; }
-        public MerchRequestStatus Status { get; }
+        public MerchRequestStatus Status { get; private set; }
         public HandoutTimestamp TryHandoutAt { get; }
         public HandoutTimestamp HandoutAt { get; }
         public Handout Handout { get; }
+
+        private static bool IsFinalStatus(MerchRequestStatus status)
+            => status == MerchRequestStatus.Done || status == MerchRequestStatus.Decline;
+
+        public void ChangeStatus(MerchRequestStatus newStatus)
+        {
+            if (IsFinalStatus(Status))
+                throw new MerchRequestStatusException($"Request in final status. Change status unavailable");
+
+            Status = newStatus;
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,6 +54,25 @@ namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Imple
             var merchRequest = Build<MerchRequest>(dto);
             ChangeTracker.Track(merchRequest);
             return merchRequest;
+        }
+
+        private async Task<IReadOnlyCollection<MerchRequest>> QueryAllAndTrack(string sql, object parameters,
+            CancellationToken cancellationToken)
+        {
+            var commandDefinition = new CommandDefinition(
+                sql,
+                parameters: parameters,
+                commandTimeout: Timeout,
+                cancellationToken: cancellationToken);
+            var connection = await DbConnectionFactory.CreateConnection(cancellationToken);
+            var dtos = await connection.QueryAsync<MerchRequestDto>(commandDefinition);
+            var merchRequests = new List<MerchRequest>();
+            foreach (var dto in dtos)
+            {
+                var merchRequest = Build<MerchRequest>(dto);
+                ChangeTracker.Track(merchRequest); 
+            }
+            return merchRequests.AsReadOnly();
         }
 
         public async Task<MerchRequest> CreateAsync(MerchRequest itemToCreate, CancellationToken cancellationToken)
@@ -120,6 +140,17 @@ namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Imple
             var connection = await DbConnectionFactory.CreateConnection(cancellationToken);
             var exists = await connection.QuerySingleAsync<bool>(commandDefinition);
             return exists;
+        }
+
+        public async Task<IReadOnlyCollection<MerchRequest>> FindByStatus(MerchRequestStatus status, CancellationToken cancellationToken = default)
+        {
+            var parameters = new
+            {
+                Status = status.Name ?? throw new ArgumentNullException(nameof(status), $"{nameof(status)} must be provided")
+            };
+            const string sql = @"SELECT * FROM merch_requests WHERE status = @Status;";
+            
+            return await QueryAllAndTrack(sql, parameters, cancellationToken);;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace MerchandiseService.Domain.AggregationModels.Enumerations
         public static readonly MerchRequestStatus Processing = new(2, nameof(Processing));
         public static readonly MerchRequestStatus Done = new(3, nameof(Done));
         public static readonly MerchRequestStatus Decline = new(4, nameof(Decline));
+        public static readonly MerchRequestStatus Awaiting = new(5, nameof(Awaiting));
 
         private MerchRequestStatus(int id, string name) : base(id, name) {}
         

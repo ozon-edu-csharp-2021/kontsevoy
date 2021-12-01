@@ -1,6 +1,6 @@
-using MediatR;
 using MerchandiseService.GrpcServices;
-using MerchandiseService.Infrastructure.Database.Configuration;
+using MerchandiseService.Infrastructure.Database.Extensions;
+using MerchandiseService.Infrastructure.Kafka.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -16,8 +16,11 @@ namespace MerchandiseService
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMediatR(typeof(Startup), typeof(DatabaseConnectionOptions));
-            services.Configure<DatabaseConnectionOptions>(Configuration.GetSection(nameof(DatabaseConnectionOptions)));
+            //Database
+            services.AddDatabaseConfiguration(Configuration);
+            //Kafka
+            services.AddKafkaConfiguration(Configuration);
+            //Controllers
             services.AddControllers();
         }
 

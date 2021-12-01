@@ -28,6 +28,7 @@
       <ProjectReference Include="..\MerchandiseService.HttpClient\MerchandiseService.HttpClient.csproj" />
       <ProjectReference Include="..\MerchandiseService.Infrastructure.Database.Postgres\MerchandiseService.Infrastructure.Database.Postgres.csproj" />
       <ProjectReference Include="..\MerchandiseService.Infrastructure.Database\MerchandiseService.Infrastructure.Database.csproj" />
+      <ProjectReference Include="..\MerchandiseService.Infrastructure.Kafka\MerchandiseService.Infrastructure.Kafka.csproj" />
       <ProjectReference Include="..\MerchandiseService.Infrastructure\MerchandiseService.Infrastructure.csproj" />
       <ProjectReference Include="..\MerchandiseService.Migrator\MerchandiseService.Migrator.csproj" />
     </ItemGroup>

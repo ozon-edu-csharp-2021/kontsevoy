@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MerchandiseService.Domain.AggregationModels.Enumerations;
@@ -32,6 +33,15 @@ namespace MerchandiseService.Infrastructure.Stubs
             }
 
             return Task.FromResult(result);
+        }
+
+        public Task<IReadOnlyCollection<MerchRequest>> FindByStatus(MerchRequestStatus status, CancellationToken cancellationToken = default)
+        {
+            lock (Dictionary)
+            {
+                return Task.FromResult<IReadOnlyCollection<MerchRequest>>(
+                    Dictionary.Values.Where(f => f.Status == status).ToList().AsReadOnly());
+            }
         }
     }
 }

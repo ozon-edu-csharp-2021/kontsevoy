@@ -17,6 +17,7 @@ namespace MerchandiseService.Infrastructure.Extensions
         {
             services.AddMediatR(typeof(CreateMerchRequestCommandHandler).Assembly);
             services.AddMediatR(typeof(InquiryMerchRequestQueryHandler).Assembly);
+            services.AddMediatR(typeof(ReplenishStockCommandHandler).Assembly);
         }
     }
 }
