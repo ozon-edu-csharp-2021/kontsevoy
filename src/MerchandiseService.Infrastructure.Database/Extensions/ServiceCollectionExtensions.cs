@@ -11,7 +11,7 @@ namespace MerchandiseService.Infrastructure.Database.Extensions
     {
         public static void AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<DatabaseConnectionOptions>(configuration);
+            services.Configure<DatabaseConnectionOptions>(configuration.GetSection(nameof(DatabaseConnectionOptions)));
         }
     }
 }

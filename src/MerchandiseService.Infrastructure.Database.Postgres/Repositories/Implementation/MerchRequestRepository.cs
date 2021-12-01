@@ -70,6 +70,7 @@ namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Imple
             foreach (var dto in dtos)
             {
                 var merchRequest = Build<MerchRequest>(dto);
+                merchRequests.Add(merchRequest);
                 ChangeTracker.Track(merchRequest); 
             }
             return merchRequests.AsReadOnly();

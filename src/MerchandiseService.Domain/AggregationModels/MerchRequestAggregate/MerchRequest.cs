@@ -59,7 +59,6 @@ namespace MerchandiseService.Domain.AggregationModels.MerchRequestAggregate
         }
         
         public Id EmployeeId { get; }
-        
         public CreationTimestamp CreatedAt { get; init; }
         public Email EmployeeNotificationEmail { get; }
         public ClothingSize EmployeeClothingSize { get; }

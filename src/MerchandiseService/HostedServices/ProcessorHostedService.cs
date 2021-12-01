@@ -41,13 +41,13 @@ namespace MerchandiseService.HostedServices
                         }
                         catch (Exception e)
                         {
-                            Logger.LogError($"Error while processing request. Message {e.Message}");
+                            Logger.LogError("Error while processing request. Message {message}", e.Message);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError($"Error while get accept requests. Message {ex.Message}");
+                    Logger.LogError("Error while get accept requests. Message {message}", ex.Message);
                 }
             }
         }

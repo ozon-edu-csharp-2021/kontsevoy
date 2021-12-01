@@ -11,7 +11,7 @@ namespace MerchandiseService.Infrastructure.Kafka.Extensions
     {
         public static void AddKafkaConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<KafkaConfiguration>(configuration);
+            services.Configure<KafkaConfiguration>(configuration.GetSection(nameof(KafkaConfiguration)));
         }
         
         /// <summary>

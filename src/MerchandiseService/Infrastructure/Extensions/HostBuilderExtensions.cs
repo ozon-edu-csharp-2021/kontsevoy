@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace MerchandiseService.Infrastructure.Extensions
 {
@@ -57,6 +58,15 @@ namespace MerchandiseService.Infrastructure.Extensions
             {
                 services.AddControllers(options => options.Filters.Add<GlobalExceptionFilter>());
             });
+            return builder;
+        }
+        
+        public static IHostBuilder AddSerilog(this IHostBuilder builder)
+        {
+            builder.UseSerilog((context, configuration) => configuration
+                .ReadFrom
+                .Configuration(context.Configuration)
+                .WriteTo.Console());
             return builder;
         }
     }

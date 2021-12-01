@@ -39,6 +39,9 @@ namespace MerchandiseService.HostedServices
                 GroupId = KafkaConfiguration.ReplenishedGroup,
                 BootstrapServers = KafkaConfiguration.BootstrapServers,
             };
+            
+            Logger.LogInformation("StockReplenishedConsumer listening {server} on {topic}",
+                KafkaConfiguration.BootstrapServers, KafkaConfiguration.ReplenishedTopic);
 
             using var consumer = new ConsumerBuilder<Ignore, string>(config).Build();
             consumer.Subscribe(KafkaConfiguration.ReplenishedTopic);
@@ -70,7 +73,7 @@ namespace MerchandiseService.HostedServices
                     }
                     catch (Exception ex)
                     {
-                        Logger.LogError($"Error while get consume. Message {ex.Message}");
+                        Logger.LogError("Error while get consume. Message {message}", ex.Message);
                     }
                 }
             }
