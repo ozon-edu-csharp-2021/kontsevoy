@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Infrastr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Infrastructure.Kafka", "src\MerchandiseService.Infrastructure.Kafka\MerchandiseService.Infrastructure.Kafka.csproj", "{2B03352F-2B15-4AFE-B1B1-72054C36F18F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Infrastructure.ExternalServices", "src\MerchandiseService.Infrastructure.ExternalServices\MerchandiseService.Infrastructure.ExternalServices.csproj", "{8635BEA4-2550-4806-82E9-38001DB9E573}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,7 @@ Global
 		{EA7757EE-7BA7-4E95-9E71-2672AF0D6415} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
 		{A95120AF-71FB-476E-B8F8-82593EF181A0} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
 		{2B03352F-2B15-4AFE-B1B1-72054C36F18F} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
+		{8635BEA4-2550-4806-82E9-38001DB9E573} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -102,5 +105,9 @@ Global
 		{2B03352F-2B15-4AFE-B1B1-72054C36F18F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B03352F-2B15-4AFE-B1B1-72054C36F18F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B03352F-2B15-4AFE-B1B1-72054C36F18F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8635BEA4-2550-4806-82E9-38001DB9E573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8635BEA4-2550-4806-82E9-38001DB9E573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8635BEA4-2550-4806-82E9-38001DB9E573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8635BEA4-2550-4806-82E9-38001DB9E573}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

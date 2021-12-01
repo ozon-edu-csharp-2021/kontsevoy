@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using MerchandiseService.HostedServices;
 using MerchandiseService.Infrastructure.Database.Postgres.Extensions;
+using MerchandiseService.Infrastructure.ExternalServices.Extensions;
 using MerchandiseService.Infrastructure.Filters;
 using MerchandiseService.Infrastructure.Interceptors;
 using MerchandiseService.Infrastructure.Kafka.Extensions;

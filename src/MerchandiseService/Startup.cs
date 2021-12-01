@@ -1,5 +1,6 @@
 using MerchandiseService.GrpcServices;
 using MerchandiseService.Infrastructure.Database.Extensions;
+using MerchandiseService.Infrastructure.ExternalServices.Extensions;
 using MerchandiseService.Infrastructure.Kafka.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,6 +21,8 @@ namespace MerchandiseService
             services.AddDatabaseConfiguration(Configuration);
             //Kafka
             services.AddKafkaConfiguration(Configuration);
+            //External services
+            services.AddExternalServices(Configuration);
             //Controllers
             services.AddControllers();
         }

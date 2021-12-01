@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using MerchandiseService;
 using MerchandiseService.Infrastructure.Extensions;
-using Serilog;
 
 CreateHostBuilder(args).Build().Run();
 
