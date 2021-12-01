@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MerchandiseService.Domain.Models
+namespace MerchandiseService.Domain.Base.Models
 {
     public abstract class ValueObject
     {

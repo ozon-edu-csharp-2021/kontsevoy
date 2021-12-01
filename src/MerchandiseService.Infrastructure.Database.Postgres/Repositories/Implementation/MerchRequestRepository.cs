@@ -7,8 +7,8 @@ using Dapper;
 using MerchandiseService.Domain.AggregationModels.Enumerations;
 using MerchandiseService.Domain.AggregationModels.MerchRequestAggregate;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
+using MerchandiseService.Infrastructure.Database.Postgres.Repositories.Models;
 using MerchandiseService.Infrastructure.Database.Repositories.Infrastructure.Interfaces;
-using MerchandiseService.Infrastructure.Repositories.Models;
 using Npgsql;
 
 namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Implementation
@@ -31,8 +31,10 @@ namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Imple
             {
                 (Id)dto.Id,
                 (CreationTimestamp)dto.CreatedAt,
-                (Id)dto.EmployeeId,
-                (Email)dto.EmployeeNotificationEmail,
+                (Email)dto.EmployeeEmail,
+                (Name)dto.EmployeeName,
+                (Email)dto.ManagerEmail,
+                (Name)dto.ManagerName,
                 (ClothingSize)dto.EmployeeClothingSize,
                 (MerchPack)dto.MerchPackId,
                 (MerchRequestStatus)dto.Status,
@@ -85,8 +87,8 @@ namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Imple
                 throw new ArgumentException($"{nameof(itemToCreate)} entity must be transient", nameof(itemToCreate));
             
             const string sql = @"INSERT INTO merch_requests
-                (created_at, employee_id, employee_notification_email, employee_clothing_size, merch_pack_id, status, try_handout_at, handout_at, handout)
-	            VALUES (@CreatedAt, @EmployeeId, @EmployeeNotificationEmail, @EmployeeClothingSize, @MerchPackId, @Status, @TryHandoutAt, @HandoutAt, @Handout::jsonb)
+                (created_at, employee_email, employee_name, manager_email, manager_name, employee_clothing_size, merch_pack_id, status, try_handout_at, handout_at, handout)
+	            VALUES (@CreatedAt, @EmployeeEmail, @EmployeeName, @ManagerEmail, @ManagerName, @EmployeeClothingSize, @MerchPackId, @Status, @TryHandoutAt, @HandoutAt, @Handout::jsonb)
 	            RETURNING *;";
             
             return await QuerySingleAndTrack(sql, MerchRequestDto.From(itemToCreate), cancellationToken);
@@ -101,8 +103,6 @@ namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Imple
                 throw new ArgumentException($"{nameof(itemToUpdate)} entity must not be transient", nameof(itemToUpdate));
             
             const string sql = @"UPDATE merch_requests SET
-                employee_notification_email = @EmployeeNotificationEmail,
-                employee_clothing_size = @EmployeeClothingSize,
                 status = @Status,
                 try_handout_at = @TryHandoutAt,
                 handout_at = @HandoutAt,
@@ -123,24 +123,15 @@ namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Imple
             return await QuerySingleAndTrack(sql, new { Id = id.Value }, cancellationToken);
         }
 
-        public async Task<bool> ContainsByParamsAsync(Id employeeId, MerchPack merchPack, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyCollection<MerchRequest>> FindByEmployeeEmailAsync(Email employeeEmail, CancellationToken cancellationToken = default)
         {
             var parameters = new
             {
-                EmployeeId = employeeId?.Value ?? throw new ArgumentNullException(nameof(employeeId), $"{nameof(employeeId)} must be provided"),
-                MerchPackId = merchPack?.Id ?? throw new ArgumentNullException(nameof(merchPack), $"{nameof(merchPack)} must be provided")
+                EmployeeEmail = employeeEmail?.Value ?? throw new ArgumentNullException(nameof(employeeEmail), $"{nameof(employeeEmail)} must be provided")
             };
-            const string sql = @"SELECT EXISTS(SELECT id FROM merch_requests WHERE employee_id = @EmployeeId AND merch_pack_id = @MerchPackId);";
+            const string sql = @"SELECT * FROM merch_requests WHERE employee_email = @EmployeeEmail ORDER BY created_at DESC;";
             
-            var commandDefinition = new CommandDefinition(
-                sql,
-                parameters: parameters,
-                commandTimeout: Timeout,
-                cancellationToken: cancellationToken);
-            
-            var connection = await DbConnectionFactory.CreateConnection(cancellationToken);
-            var exists = await connection.QuerySingleAsync<bool>(commandDefinition);
-            return exists;
+            return await QueryAllAndTrack(sql, parameters, cancellationToken);
         }
 
         public async Task<IReadOnlyCollection<MerchRequest>> FindByStatus(MerchRequestStatus status, CancellationToken cancellationToken = default)
@@ -151,7 +142,7 @@ namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Imple
             };
             const string sql = @"SELECT * FROM merch_requests WHERE status = @Status;";
             
-            return await QueryAllAndTrack(sql, parameters, cancellationToken);;
+            return await QueryAllAndTrack(sql, parameters, cancellationToken);
         }
     }
 }

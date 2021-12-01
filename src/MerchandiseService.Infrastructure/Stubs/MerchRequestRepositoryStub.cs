@@ -5,13 +5,11 @@ using System.Threading.Tasks;
 using MerchandiseService.Domain.AggregationModels.Enumerations;
 using MerchandiseService.Domain.AggregationModels.MerchRequestAggregate;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
-using MerchandiseService.Domain.Contracts;
 
 namespace MerchandiseService.Infrastructure.Stubs
 {
     public class MerchRequestRepositoryStub : EntityRepositoryStub<MerchRequest, Id>, IMerchRequestRepository
     {
-        public MerchRequestRepositoryStub(IUnitOfWork unitOfWork) : base(unitOfWork) {}
         protected override Id GenerateId()
         {
             long max = 0;
@@ -24,15 +22,14 @@ namespace MerchandiseService.Infrastructure.Stubs
             return new Id(max + 1);
         }
 
-        public Task<bool> ContainsByParamsAsync(Id employeeId, MerchPack merchPack, CancellationToken cancellationToken = default)
+        public Task<IReadOnlyCollection<MerchRequest>> FindByEmployeeEmailAsync(Email employeeEmail, CancellationToken cancellationToken = default)
         {
-            bool result;
             lock (Dictionary)
             {
-                result = Dictionary.Values.Any(f => f.EmployeeId == employeeId && f.MerchPack == merchPack);
+                return Task.FromResult<IReadOnlyCollection<MerchRequest>>(
+                    Dictionary.Values.Where(f => f.EmployeeEmail == employeeEmail)
+                        .OrderByDescending(f => f.CreatedAt).ToList().AsReadOnly());
             }
-
-            return Task.FromResult(result);
         }
 
         public Task<IReadOnlyCollection<MerchRequest>> FindByStatus(MerchRequestStatus status, CancellationToken cancellationToken = default)

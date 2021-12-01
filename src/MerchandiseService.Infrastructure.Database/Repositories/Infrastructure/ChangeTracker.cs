@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
-using MerchandiseService.Domain.Models;
+using MerchandiseService.Domain.Base.Models;
 using MerchandiseService.Infrastructure.Database.Repositories.Infrastructure.Interfaces;
 
 namespace MerchandiseService.Infrastructure.Database.Repositories.Infrastructure

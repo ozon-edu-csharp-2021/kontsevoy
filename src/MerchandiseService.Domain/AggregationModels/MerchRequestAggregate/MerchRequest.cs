@@ -1,8 +1,8 @@
 ﻿using System;
 using MerchandiseService.Domain.AggregationModels.Enumerations;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
+using MerchandiseService.Domain.Base.Models;
 using MerchandiseService.Domain.Exceptions;
-using MerchandiseService.Domain.Models;
 
 namespace MerchandiseService.Domain.AggregationModels.MerchRequestAggregate
 {
@@ -10,14 +10,18 @@ namespace MerchandiseService.Domain.AggregationModels.MerchRequestAggregate
     {
         public static MerchRequest New(
             CreationTimestamp createdAt,
-            Id employeeId,
-            Email employeeNotificationEmail,
+            Email employeeEmail,
+            Name employeeName,
+            Email managerEmail,
+            Name managerName,
             ClothingSize employeeClothingSize,
             MerchPack merchPack) =>
             new(null,
                 createdAt,
-                employeeId,
-                employeeNotificationEmail,
+                employeeEmail,
+                employeeName,
+                managerEmail,
+                managerName,
                 employeeClothingSize, 
                 merchPack,
                 MerchRequestStatus.New);
@@ -25,8 +29,10 @@ namespace MerchandiseService.Domain.AggregationModels.MerchRequestAggregate
         private MerchRequest(
             Id id,
             CreationTimestamp createdAt,
-            Id employeeId,
-            Email employeeNotificationEmail,
+            Email employeeEmail,
+            Name employeeName,
+            Email managerEmail,
+            Name managerName,
             ClothingSize employeeClothingSize,
             MerchPack merchPack,
             MerchRequestStatus status,
@@ -38,12 +44,18 @@ namespace MerchandiseService.Domain.AggregationModels.MerchRequestAggregate
             CreatedAt = createdAt
                         ?? throw new ArgumentNullException(nameof(createdAt),
                             $"{nameof(createdAt)} must be provided");
-            EmployeeId = employeeId 
-                         ?? throw new ArgumentNullException(nameof(employeeId),
-                             $"{nameof(employeeId)} must be provided");
-            EmployeeNotificationEmail = employeeNotificationEmail 
-                                        ?? throw new ArgumentNullException(nameof(employeeNotificationEmail),
-                                            $"{nameof(employeeNotificationEmail)} must be provided");
+            EmployeeEmail = employeeEmail 
+                            ?? throw new ArgumentNullException(nameof(employeeEmail),
+                                $"{nameof(employeeEmail)} must be provided");
+            EmployeeName = employeeName 
+                            ?? throw new ArgumentNullException(nameof(employeeName),
+                                $"{nameof(employeeName)} must be provided");
+            ManagerEmail = managerEmail 
+                           ?? throw new ArgumentNullException(nameof(managerEmail),
+                               $"{nameof(managerEmail)} must be provided");
+            ManagerName = managerName 
+                           ?? throw new ArgumentNullException(nameof(managerName),
+                               $"{nameof(managerName)} must be provided");
             EmployeeClothingSize = employeeClothingSize
                                    ?? throw new ArgumentNullException(nameof(employeeClothingSize),
                                        $"{nameof(employeeClothingSize)} must be provided");
@@ -58,9 +70,11 @@ namespace MerchandiseService.Domain.AggregationModels.MerchRequestAggregate
             Handout = handout;
         }
         
-        public Id EmployeeId { get; }
         public CreationTimestamp CreatedAt { get; init; }
-        public Email EmployeeNotificationEmail { get; }
+        public Email EmployeeEmail { get; }
+        public Name EmployeeName { get; }
+        public Email ManagerEmail { get; }
+        public Name ManagerName { get; }
         public ClothingSize EmployeeClothingSize { get; }
         public MerchPack MerchPack { get; }
         public MerchRequestStatus Status { get; private set; }

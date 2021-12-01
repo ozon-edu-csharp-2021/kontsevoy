@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
-using MerchandiseService.Domain.Models;
+using MerchandiseService.Domain.Base.Models;
 
 namespace MerchandiseService.Infrastructure.Database.Repositories.Infrastructure.Interfaces
 {

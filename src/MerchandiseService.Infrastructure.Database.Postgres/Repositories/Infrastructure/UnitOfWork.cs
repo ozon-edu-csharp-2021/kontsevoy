@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using MerchandiseService.Domain.Contracts;
+using MerchandiseService.Domain.Base.Contracts;
 using MerchandiseService.Infrastructure.Database.Postgres.Repositories.Infrastructure.Exceptions;
 using MerchandiseService.Infrastructure.Database.Repositories.Infrastructure.Interfaces;
 using Npgsql;

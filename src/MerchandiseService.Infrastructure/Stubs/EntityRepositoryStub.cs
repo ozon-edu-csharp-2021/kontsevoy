@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using MerchandiseService.Domain.Contracts;
-using MerchandiseService.Domain.Models;
+using MerchandiseService.Domain.Base.Contracts;
+using MerchandiseService.Domain.Base.Models;
 
 namespace MerchandiseService.Infrastructure.Stubs
 {
@@ -12,8 +12,6 @@ namespace MerchandiseService.Infrastructure.Stubs
         where TAggregationRoot : Entity<TAggregationRootId>
     {
         protected static Dictionary<TAggregationRootId, TAggregationRoot> Dictionary { get; } = new();
-        public EntityRepositoryStub(IUnitOfWork unitOfWork) => UnitOfWork = unitOfWork;
-        public IUnitOfWork UnitOfWork { get; }
         protected abstract TAggregationRootId GenerateId();
         public Task<TAggregationRoot> CreateAsync(TAggregationRoot itemToCreate, CancellationToken cancellationToken = default)
         {

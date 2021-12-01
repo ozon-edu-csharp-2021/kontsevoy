@@ -1,14 +1,16 @@
 using System;
 using MerchandiseService.Domain.AggregationModels.MerchRequestAggregate;
 
-namespace MerchandiseService.Infrastructure.Repositories.Models
+namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Models
 {
     public record MerchRequestDto
     {   
         public long Id { get; init; }
         public DateTime CreatedAt { get; init; }
-        public long EmployeeId { get; init; }
-        public string EmployeeNotificationEmail { get; init; }
+        public string EmployeeEmail { get; init; }
+        public string EmployeeName { get; init; }
+        public string ManagerEmail { get; init; }
+        public string ManagerName { get; init; }
         public string EmployeeClothingSize { get; init; }
         public long MerchPackId { get; init; }
         public string Status { get; init; }
@@ -21,8 +23,10 @@ namespace MerchandiseService.Infrastructure.Repositories.Models
             {
                 Id = merchRequest.IsTransient ? default : merchRequest.Id.Value,
                 CreatedAt = merchRequest.CreatedAt.Value,
-                EmployeeId = merchRequest.EmployeeId.Value,
-                EmployeeNotificationEmail = merchRequest.EmployeeNotificationEmail,
+                EmployeeEmail = merchRequest.EmployeeEmail,
+                EmployeeName = merchRequest.EmployeeName,
+                ManagerEmail = merchRequest.ManagerEmail,
+                ManagerName = merchRequest.ManagerName,
                 EmployeeClothingSize = merchRequest.EmployeeClothingSize,
                 MerchPackId = merchRequest.MerchPack.Id,
                 Status = merchRequest.Status,

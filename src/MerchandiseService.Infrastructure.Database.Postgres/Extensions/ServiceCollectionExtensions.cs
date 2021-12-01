@@ -1,5 +1,5 @@
 ﻿using MerchandiseService.Domain.AggregationModels.MerchRequestAggregate;
-using MerchandiseService.Domain.Contracts;
+using MerchandiseService.Domain.Base.Contracts;
 using MerchandiseService.Infrastructure.Database.Postgres.Repositories.Implementation;
 using MerchandiseService.Infrastructure.Database.Postgres.Repositories.Infrastructure;
 using MerchandiseService.Infrastructure.Database.Repositories.Infrastructure;

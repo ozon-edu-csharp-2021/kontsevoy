@@ -16,7 +16,7 @@ namespace MerchandiseService.Infrastructure.Extensions
         public static void AddInfrastructureServices(this IServiceCollection services)
         {
             services.AddMediatR(typeof(CreateMerchRequestCommandHandler).Assembly);
-            services.AddMediatR(typeof(InquiryMerchRequestQueryHandler).Assembly);
+            services.AddMediatR(typeof(StoryMerchRequestQueryHandler).Assembly);
             services.AddMediatR(typeof(ReplenishStockCommandHandler).Assembly);
         }
     }

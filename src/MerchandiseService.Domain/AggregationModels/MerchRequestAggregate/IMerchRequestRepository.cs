@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MerchandiseService.Domain.AggregationModels.Enumerations;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
-using MerchandiseService.Domain.Contracts;
+using MerchandiseService.Domain.Base.Contracts;
 
 namespace MerchandiseService.Domain.AggregationModels.MerchRequestAggregate
 {
@@ -13,13 +13,12 @@ namespace MerchandiseService.Domain.AggregationModels.MerchRequestAggregate
     public interface IMerchRequestRepository : IRepository<MerchRequest, Id>
     {
         /// <summary>
-        /// Проверить наличие сущности с заданными атрибутами
+        /// Получить все сущности с подходящим email
         /// </summary>
-        /// <param name="employeeId">Идентификатор сотрудника</param>
-        /// <param name="merchPack">Идентификатор комплекта</param>
+        /// <param name="employeeEmail">Email сотрудника</param>
         /// <param name="cancellationToken">Токен для отмены операции. <see cref="CancellationToken"/></param>
-        /// <returns>true, если нашёлся запрос на комплект для заданного сотрудника, иначе false</returns>
-        Task<bool> ContainsByParamsAsync(Id employeeId, MerchPack merchPack, CancellationToken cancellationToken = default);
+        /// <returns>Коллекция сущностей с подходящим email</returns>
+        Task<IReadOnlyCollection<MerchRequest>> FindByEmployeeEmailAsync(Email employeeEmail, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Получить все сущности по статусу

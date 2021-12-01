@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MerchandiseService.Domain.Contracts
+namespace MerchandiseService.Domain.Base.Contracts
 {
     public interface IUnitOfWork : IDisposable
     {

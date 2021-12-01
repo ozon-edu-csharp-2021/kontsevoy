@@ -17,12 +17,15 @@ namespace MerchandiseService.Infrastructure.Handlers.MerchRequestAggregate
         
         public async Task<long> Handle(CreateMerchRequestCommand request, CancellationToken cancellationToken)
         {
-            var employeeId = new Id(request.EmployeeId);
-            var employeeNotificationEmail = new Email(request.NotificationEmail);
-            var employeeClothingSize = ClothingSize.GetById(request.ClothingSize);
-            var merchPack = MerchPack.GetById(request.MerchPackType);
+            var employeeEmail = (Email)request.EmployeeEmail;
+            var employeeName = (Name)request.EmployeeName;
+            var managerEmail = (Email)request.ManagerEmail;
+            var managerName = (Name)request.ManagerName;
+            var employeeClothingSize = (ClothingSize)request.ClothingSize;
+            var merchPack = (MerchPack)request.MerchPackType;
 
-            var merchRequest = MerchRequest.New(CreationTimestamp.Now, employeeId, employeeNotificationEmail, employeeClothingSize, merchPack);
+            var merchRequest = MerchRequest.New(CreationTimestamp.Now, employeeEmail, employeeName,
+                managerEmail, managerName, employeeClothingSize, merchPack);
 
             merchRequest = await MerchRequestRepository.CreateAsync(merchRequest, cancellationToken);
             

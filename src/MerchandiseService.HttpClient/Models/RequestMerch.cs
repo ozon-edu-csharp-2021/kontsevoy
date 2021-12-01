@@ -6,19 +6,25 @@ namespace MerchandiseService.HttpClient.Models
     public record RequestMerchRequest
     {
         public RequestMerchRequest(
-            long employeeId, 
-            string notificationEmail, 
+            string employeeEmail,
+            string employeeName,
+            string managerEmail,
+            string managerName,
             ClothingSizeEnum clothingSize, 
             MerchType merchPackType)
         {
-            EmployeeId = employeeId;
-            NotificationEmail = notificationEmail;
+            EmployeeEmail = employeeEmail;
+            EmployeeName = employeeName;
+            ManagerEmail = managerEmail;
+            ManagerName = managerName;
             ClothingSize = clothingSize;
             MerchPackType = merchPackType;
         }
         
-        public long EmployeeId { get; }
-        public string NotificationEmail { get; }
+        public string EmployeeEmail { get; }
+        public string EmployeeName { get; }
+        public string ManagerEmail { get; }
+        public string ManagerName { get; }
         public ClothingSizeEnum ClothingSize { get; }
         public MerchType MerchPackType { get; }
     }
