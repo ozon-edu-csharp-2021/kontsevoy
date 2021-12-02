@@ -10,4 +10,5 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
         .AddSerilog()
         .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
         .AddInfrastructure()
-        .AddHttp();
+        .AddHttp()
+        .AddHttpOpenTracing();

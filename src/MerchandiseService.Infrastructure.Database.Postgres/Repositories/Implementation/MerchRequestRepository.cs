@@ -10,20 +10,23 @@ using MerchandiseService.Domain.AggregationModels.ValueObjects;
 using MerchandiseService.Infrastructure.Database.Postgres.Repositories.Models;
 using MerchandiseService.Infrastructure.Database.Repositories.Infrastructure.Interfaces;
 using Npgsql;
+using OpenTracing;
 
 namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Implementation
 {
     public class MerchRequestRepository : IMerchRequestRepository
     {
+        private ITracer Tracer { get; }
         private IDbConnectionFactory<NpgsqlConnection> DbConnectionFactory { get; }
         private IChangeTracker ChangeTracker { get; }
         
         private const int Timeout = 5;
 
-        public MerchRequestRepository(IDbConnectionFactory<NpgsqlConnection> dbConnectionFactory, IChangeTracker changeTracker)
+        public MerchRequestRepository(IDbConnectionFactory<NpgsqlConnection> dbConnectionFactory, IChangeTracker changeTracker, ITracer tracer)
         {
             DbConnectionFactory = dbConnectionFactory;
             ChangeTracker = changeTracker;
+            Tracer = tracer;
         }
 
         private static T Build<T>(MerchRequestDto dto) => (T)Activator.CreateInstance(typeof(T),
@@ -80,6 +83,8 @@ namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Imple
 
         public async Task<MerchRequest> CreateAsync(MerchRequest itemToCreate, CancellationToken cancellationToken)
         {
+            using var span = Tracer.BuildSpan(nameof(CreateAsync)).WithTag(nameof(itemToCreate), itemToCreate?.EmployeeEmail).StartActive();
+            
             if (itemToCreate is null)
                 throw new ArgumentNullException(nameof(itemToCreate), $"{nameof(itemToCreate)} must be provided");
             
@@ -96,6 +101,8 @@ namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Imple
 
         public async Task<MerchRequest> UpdateAsync(MerchRequest itemToUpdate, CancellationToken cancellationToken = default)
         {
+            using var span = Tracer.BuildSpan(nameof(UpdateAsync)).WithTag(nameof(itemToUpdate), itemToUpdate?.Id?.Value.ToString()).StartActive();
+            
             if (itemToUpdate is null)
                 throw new ArgumentNullException(nameof(itemToUpdate), $"{nameof(itemToUpdate)} must be provided");
             
@@ -115,6 +122,8 @@ namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Imple
 
         public async Task<MerchRequest> FindByIdAsync(Id id, CancellationToken cancellationToken = default)
         {
+            using var span = Tracer.BuildSpan(nameof(FindByIdAsync)).WithTag(nameof(id), id?.Value.ToString()).StartActive();
+            
             if (id is null)
                 throw new ArgumentNullException(nameof(id), $"{nameof(id)} must be provided");
             
@@ -125,6 +134,8 @@ namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Imple
 
         public async Task<IReadOnlyCollection<MerchRequest>> FindByEmployeeEmailAsync(Email employeeEmail, CancellationToken cancellationToken = default)
         {
+            using var span = Tracer.BuildSpan(nameof(FindByEmployeeEmailAsync)).WithTag(nameof(employeeEmail), employeeEmail?.Value).StartActive();
+
             var parameters = new
             {
                 EmployeeEmail = employeeEmail?.Value ?? throw new ArgumentNullException(nameof(employeeEmail), $"{nameof(employeeEmail)} must be provided")
@@ -136,12 +147,15 @@ namespace MerchandiseService.Infrastructure.Database.Postgres.Repositories.Imple
 
         public async Task<IReadOnlyCollection<MerchRequest>> FindByStatus(MerchRequestStatus status, CancellationToken cancellationToken = default)
         {
+            //Внутрисервисный метод, трассировку не добавляем, иначе их будет много
+            
             var parameters = new
             {
-                Status = status.Name ?? throw new ArgumentNullException(nameof(status), $"{nameof(status)} must be provided")
+                Status = status.Name ??
+                         throw new ArgumentNullException(nameof(status), $"{nameof(status)} must be provided")
             };
             const string sql = @"SELECT * FROM merch_requests WHERE status = @Status;";
-            
+
             return await QueryAllAndTrack(sql, parameters, cancellationToken);
         }
     }

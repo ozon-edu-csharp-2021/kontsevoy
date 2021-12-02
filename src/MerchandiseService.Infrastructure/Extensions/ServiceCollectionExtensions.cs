@@ -1,6 +1,13 @@
-﻿using MediatR;
+﻿using Jaeger;
+using Jaeger.Reporters;
+using Jaeger.Samplers;
+using Jaeger.Senders.Thrift;
+using MediatR;
 using MerchandiseService.Infrastructure.Handlers.MerchRequestAggregate;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using OpenTracing;
 
 namespace MerchandiseService.Infrastructure.Extensions
 {
@@ -18,6 +25,23 @@ namespace MerchandiseService.Infrastructure.Extensions
             services.AddMediatR(typeof(CreateMerchRequestCommandHandler).Assembly);
             services.AddMediatR(typeof(StoryMerchRequestQueryHandler).Assembly);
             services.AddMediatR(typeof(ReplenishStockCommandHandler).Assembly);
+        }
+        
+        public static void AddJaeger(this IServiceCollection services)
+        {
+            // Adds the Jaeger Tracer.
+            services.AddSingleton<ITracer>(sp =>
+            {
+                var serviceName = sp.GetRequiredService<IWebHostEnvironment>().ApplicationName;
+                var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
+                var reporter = new RemoteReporter.Builder().WithLoggerFactory(loggerFactory).WithSender(new UdpSender())
+                    .Build();
+                var tracer = new Tracer.Builder(serviceName)
+                    .WithSampler(new ConstSampler(true))
+                    .WithReporter(reporter)
+                    .Build();
+                return tracer;
+            });
         }
     }
 }

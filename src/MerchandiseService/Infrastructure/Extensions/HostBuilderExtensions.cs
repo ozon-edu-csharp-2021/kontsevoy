@@ -3,7 +3,6 @@ using System.IO;
 using System.Reflection;
 using MerchandiseService.HostedServices;
 using MerchandiseService.Infrastructure.Database.Postgres.Extensions;
-using MerchandiseService.Infrastructure.ExternalServices.Extensions;
 using MerchandiseService.Infrastructure.Filters;
 using MerchandiseService.Infrastructure.Interceptors;
 using MerchandiseService.Infrastructure.Kafka.Extensions;
@@ -12,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using OpenTracing.Contrib.NetCore.Configuration;
 using Serilog;
 
 namespace MerchandiseService.Infrastructure.Extensions
@@ -58,6 +58,16 @@ namespace MerchandiseService.Infrastructure.Extensions
             builder.ConfigureServices(services =>
             {
                 services.AddControllers(options => options.Filters.Add<GlobalExceptionFilter>());
+            });
+            return builder;
+        }
+        
+        public static IHostBuilder AddHttpOpenTracing(this IHostBuilder builder)
+        {
+            builder.ConfigureServices(services =>
+            {
+                services.AddOpenTracing();
+                services.AddJaeger();
             });
             return builder;
         }

@@ -6,6 +6,7 @@ using MerchandiseService.HttpClient.Models;
 using MerchandiseService.Infrastructure.Commands.MerchRequestAggregate;
 using MerchandiseService.Infrastructure.Queries.MerchRequestAggregate;
 using Microsoft.AspNetCore.Mvc;
+using OpenTracing;
 
 namespace MerchandiseService.Controllers
 {
@@ -15,8 +16,10 @@ namespace MerchandiseService.Controllers
     public class MerchandiseController : ControllerBase
     {
         private IMediator Mediator { get; }
+        
+        private ITracer Tracer { get; }
 
-        public MerchandiseController(IMediator mediator) => Mediator = mediator;
+        public MerchandiseController(IMediator mediator, ITracer tracer) => (Mediator, Tracer) = (mediator, tracer);
         
         /// <summary>
         /// Сформировать запрос на выдачу комплекта мерча
@@ -27,6 +30,8 @@ namespace MerchandiseService.Controllers
         [HttpPost("request")]
         public async Task<ActionResult<RequestMerchResponse>> RequestMerch(RequestMerchRequest request, CancellationToken token)
         {
+            using var span = Tracer.BuildSpan(nameof(RequestMerch)).StartActive();
+            
             var merchRequest = new CreateMerchRequestCommand
             {
                 EmployeeEmail = request.EmployeeEmail,
@@ -51,6 +56,8 @@ namespace MerchandiseService.Controllers
         [HttpPost("story")]
         public async Task<ActionResult<StoryMerchResponse>> StoryMerch(StoryMerchRequest request, CancellationToken token)
         {
+            using var span = Tracer.BuildSpan(nameof(StoryMerch)).WithTag(nameof(request.EmployeeEmail), request.EmployeeEmail).StartActive();
+            
             var inquiryRequest = new StoryMerchRequestQuery
             {
                 EmployeeEmail = request.EmployeeEmail
