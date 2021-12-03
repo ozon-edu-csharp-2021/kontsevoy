@@ -1,4 +1,7 @@
-﻿using MerchandiseService.Infrastructure.Kafka.Configuration;
+﻿using MediatR;
+using MerchandiseService.Infrastructure.Kafka.Configuration;
+using MerchandiseService.Infrastructure.Kafka.Handlers.EmailService;
+using MerchandiseService.Infrastructure.Kafka.MessageBroker;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,7 +23,8 @@ namespace MerchandiseService.Infrastructure.Kafka.Extensions
         /// <param name="services">Объект <see cref="IServiceCollection"/></param>
         public static void AddMessageBroker(this IServiceCollection services)
         {
-            
+            services.AddSingleton<IProducerBuilderWrapper, ProducerBuilderWrapper>();
+            services.AddMediatR(typeof(SendEmailCommandHandler).Assembly);
         }
     }
 }

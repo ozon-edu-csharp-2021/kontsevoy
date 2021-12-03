@@ -8,6 +8,7 @@ using MediatR;
 using MerchandiseService.Domain.AggregationModels.Enumerations;
 using MerchandiseService.Domain.AggregationModels.MerchRequestAggregate;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
+using MerchandiseService.Infrastructure.Commands.EmailService;
 using MerchandiseService.Infrastructure.Commands.StockApi;
 using MerchandiseService.Infrastructure.Models;
 using MerchandiseService.Infrastructure.Queries.StockApi;
@@ -71,7 +72,16 @@ namespace MerchandiseService.HostedServices
                             {
                                 var handout = JsonSerializer.Serialize<IReadOnlyCollection<StockItemDto>>(command.Items);
                                 merchRequest.DoHandout(handout, now);
-                                //TODO send email
+                                await mediator.Send(new SendEmailCommand
+                                {
+                                    Id = merchRequest.Id.Value,
+                                    EmployeeEmail = merchRequest.EmployeeEmail,
+                                    EmployeeName = merchRequest.EmployeeName,
+                                    ManagerEmail = merchRequest.ManagerEmail,
+                                    ManagerName = merchRequest.ManagerName,
+                                    ClothingSize = merchRequest.EmployeeClothingSize.Id,
+                                    MerchPackType = merchRequest.MerchPack.Id
+                                }, stoppingToken);
                             }
                             else
                                 merchRequest.TryHandoutNeedAwait(now);
