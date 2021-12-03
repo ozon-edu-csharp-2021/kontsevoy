@@ -36,6 +36,7 @@ namespace MerchandiseService.Infrastructure.Kafka.Handlers.EmailService
                         EmployeeName = command.EmployeeName,
                         ManagerEmail = command.ManagerEmail,
                         ManagerName = command.ManagerName,
+                        EventType = EmployeeEventType.MerchDelivery,
                         Payload = new MerchDeliveryEventPayload
                         {
                             ClothingSize = (ClothingSize)command.ClothingSize,
