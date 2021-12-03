@@ -5,12 +5,23 @@ namespace MerchandiseService.Domain.AggregationModels.Enumerations
 {
     public class MerchType : Enumeration
     {
-        public static readonly MerchType TShirt = new(1, nameof(TShirt), MerchKind.Clothing);
-        public static readonly MerchType Sweatshirt = new(2, nameof(Sweatshirt), MerchKind.Clothing);
-        public static readonly MerchType Notepad = new(3, nameof(Notepad), MerchKind.Accessory);
-        public static readonly MerchType Bag = new(4, nameof(Bag), MerchKind.Accessory);
-        public static readonly MerchType Pen = new(5, nameof(Pen), MerchKind.Accessory);
-        public static readonly MerchType Socks = new(6, nameof(Socks), MerchKind.Clothing);
+        public static readonly MerchType TShirtStarter = new(1, nameof(TShirtStarter), MerchKind.Clothing);
+        public static readonly MerchType NotepadStarter = new(2, nameof(NotepadStarter), MerchKind.Accessory);
+        public static readonly MerchType PenStarter = new(3, nameof(PenStarter), MerchKind.Accessory);
+        public static readonly MerchType SocksStarter = new(4, nameof(SocksStarter), MerchKind.Clothing);
+        public static readonly MerchType TShirtAfterProbation = new(5, nameof(TShirtAfterProbation), MerchKind.Clothing);
+        public static readonly MerchType SweatshirtAfterProbation = new(6, nameof(SweatshirtAfterProbation), MerchKind.Clothing);
+        public static readonly MerchType SweatshirtConferenceSpeaker = new(7, nameof(SweatshirtConferenceSpeaker), MerchKind.Clothing);
+        public static readonly MerchType NotepadConferenceSpeaker = new(8, nameof(NotepadConferenceSpeaker), MerchKind.Accessory);
+        public static readonly MerchType PenConferenceSpeaker = new(9, nameof(PenConferenceSpeaker), MerchKind.Accessory);
+        public static readonly MerchType TShirtConferenceListener = new(10, nameof(TShirtConferenceListener), MerchKind.Clothing);
+        public static readonly MerchType NotepadConferenceListener = new(11, nameof(NotepadConferenceListener), MerchKind.Accessory);
+        public static readonly MerchType PenConferenceListener = new(12, nameof(PenConferenceListener), MerchKind.Accessory);
+        public static readonly MerchType TShirtVeteran = new(13, nameof(TShirtVeteran), MerchKind.Clothing);
+        public static readonly MerchType SweatshirtVeteran = new(14, nameof(SweatshirtVeteran), MerchKind.Clothing);
+        public static readonly MerchType NotepadVeteran = new(15, nameof(NotepadVeteran), MerchKind.Accessory);
+        public static readonly MerchType PenVeteran = new(16, nameof(PenVeteran), MerchKind.Accessory);
+        public static readonly MerchType CardHolderVeteran = new(17, nameof(CardHolderVeteran), MerchKind.Accessory);
         
         public MerchKind Kind { get; }
 

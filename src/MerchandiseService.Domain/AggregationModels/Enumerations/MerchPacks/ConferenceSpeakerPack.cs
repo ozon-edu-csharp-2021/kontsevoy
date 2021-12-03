@@ -8,7 +8,9 @@ namespace MerchandiseService.Domain.AggregationModels.Enumerations.MerchPacks
             (int)CSharpCourse.Core.Lib.Enums.MerchType.ConferenceSpeakerPack, nameof(ConferenceSpeakerPack)) =>
             Items = new Dictionary<MerchType, int>
                 {
-                    [MerchType.TShirt] = 1
+                    [MerchType.NotepadConferenceSpeaker] = 1,
+                    [MerchType.PenConferenceSpeaker] = 1,
+                    [MerchType.SweatshirtConferenceSpeaker] = 1
                 }
                 .ToReadOnlyMerchItemCollection();
     }

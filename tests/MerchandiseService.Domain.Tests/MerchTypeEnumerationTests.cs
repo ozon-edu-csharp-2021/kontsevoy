@@ -16,12 +16,12 @@ namespace MerchandiseService.Domain.Tests
         [Fact(DisplayName = "Равенство экземпляров по ссылкам")]
         public void ReferenceEquality()
         {
-            Assert.Same(MerchType.Bag, MerchType.GetById(MerchType.Bag.Id));
-            Assert.Same(MerchType.Notepad, MerchType.GetById(MerchType.Notepad.Id));
-            Assert.Same(MerchType.Pen, MerchType.GetById(MerchType.Pen.Id));
-            Assert.Same(MerchType.Socks, MerchType.GetById(MerchType.Socks.Id));
-            Assert.Same(MerchType.Sweatshirt, MerchType.GetById(MerchType.Sweatshirt.Id));
-            Assert.Same(MerchType.TShirt, MerchType.GetById(MerchType.TShirt.Id));
+            Assert.Same(MerchType.SocksStarter, MerchType.GetById(MerchType.SocksStarter.Id));
+            Assert.Same(MerchType.PenStarter, MerchType.GetById(MerchType.PenStarter.Id));
+            Assert.Same(MerchType.TShirtAfterProbation, MerchType.GetById(MerchType.TShirtAfterProbation.Id));
+            Assert.Same(MerchType.SweatshirtAfterProbation, MerchType.GetById(MerchType.SweatshirtAfterProbation.Id));
+            Assert.Same(MerchType.SweatshirtVeteran, MerchType.GetById(MerchType.SweatshirtVeteran.Id));
+            Assert.Same(MerchType.TShirtStarter, MerchType.GetById(MerchType.TShirtStarter.Id));
         }
         
         [Fact(DisplayName = "Все предопределённые значения можно получить через GetById")]

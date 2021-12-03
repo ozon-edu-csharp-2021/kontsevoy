@@ -8,8 +8,8 @@ namespace MerchandiseService.Domain.AggregationModels.Enumerations.MerchPacks
             (int)CSharpCourse.Core.Lib.Enums.MerchType.ProbationPeriodEndingPack, nameof(ProbationPeriodEndingPack)) =>
             Items = new Dictionary<MerchType, int>
                 {
-                    [MerchType.TShirt] = 1,
-                    [MerchType.Sweatshirt] = 1
+                    [MerchType.SweatshirtAfterProbation] = 1,
+                    [MerchType.TShirtAfterProbation] = 1
                 }
                 .ToReadOnlyMerchItemCollection();
     }

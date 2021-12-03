@@ -82,9 +82,6 @@ namespace MerchandiseService.Domain.AggregationModels.MerchRequestAggregate
         public HandoutTimestamp HandoutAt { get; private set; }
         public Handout Handout { get; private set; }
 
-        private static bool IsFinalStatus(MerchRequestStatus status)
-            => status == MerchRequestStatus.Done || status == MerchRequestStatus.Decline;
-
         public void ReadyToProcessing()
         {
             if (Status != MerchRequestStatus.New || Status != MerchRequestStatus.Awaiting)

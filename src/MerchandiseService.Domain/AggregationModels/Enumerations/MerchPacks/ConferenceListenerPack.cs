@@ -8,10 +8,9 @@ namespace MerchandiseService.Domain.AggregationModels.Enumerations.MerchPacks
             (int)CSharpCourse.Core.Lib.Enums.MerchType.ConferenceListenerPack, nameof(ConferenceListenerPack)) =>
             Items = new Dictionary<MerchType, int>
                 {
-                    [MerchType.Pen] = 1,
-                    [MerchType.Notepad] = 1,
-                    [MerchType.Sweatshirt] = 1,
-                    [MerchType.Bag] = 1
+                    [MerchType.NotepadConferenceListener] = 1,
+                    [MerchType.PenConferenceListener] = 1,
+                    [MerchType.TShirtConferenceListener] = 1
                 }
                 .ToReadOnlyMerchItemCollection();
     }

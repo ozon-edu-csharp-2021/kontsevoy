@@ -8,8 +8,10 @@ namespace MerchandiseService.Domain.AggregationModels.Enumerations.MerchPacks
             (int)CSharpCourse.Core.Lib.Enums.MerchType.WelcomePack, nameof(WelcomePack)) =>
             Items = new Dictionary<MerchType, int>
                 {
-                    [MerchType.Pen] = 1,
-                    [MerchType.Notepad] = 1
+                    [MerchType.NotepadStarter] = 1,
+                    [MerchType.PenStarter] = 1,
+                    [MerchType.SocksStarter] = 1,
+                    [MerchType.TShirtStarter] = 1
                 }
                 .ToReadOnlyMerchItemCollection();
     }
