@@ -37,9 +37,13 @@ namespace MerchandiseService.Migrator.Migrations
                         .WithColumnDescription("Состав выданного мерчпака");
                 
                 Create
-                    .Index($"idx_{TableName}_employee_name")
+                    .Index($"idx_{TableName}_employee_email")
                     .OnTable(TableName)
-                    .OnColumn("employee_name");
+                    .OnColumn("employee_email");
+                Create
+                    .Index($"idx_{TableName}_status")
+                    .OnTable(TableName)
+                    .OnColumn("status");
             }
         }
 
