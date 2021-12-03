@@ -28,7 +28,7 @@ namespace MerchandiseService.Infrastructure.ExternalServices.Extensions
         private static void AddStockApiService(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionAddress = configuration.GetSection(nameof(StockApiGrpcServiceConfiguration))
-                .Get<StockApiGrpcServiceConfiguration>().ServerAddress;
+                .Get<StockApiGrpcServiceConfiguration>()?.ServerAddress;
 
             if (string.IsNullOrWhiteSpace(connectionAddress))
                 throw new ApplicationException($"Wrong or empty {nameof(StockApiGrpcServiceConfiguration)}");

@@ -1,5 +1,6 @@
 using MerchandiseService.GrpcServices;
 using MerchandiseService.Infrastructure.Database.Extensions;
+using MerchandiseService.Infrastructure.Extensions;
 using MerchandiseService.Infrastructure.ExternalServices.Extensions;
 using MerchandiseService.Infrastructure.Kafka.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -23,6 +24,8 @@ namespace MerchandiseService
             services.AddKafkaConfiguration(Configuration);
             //External services
             services.AddExternalServices(Configuration);
+            services.AddOpenTracing();
+            services.AddJaeger(Configuration);
             //Controllers
             services.AddControllers();
         }

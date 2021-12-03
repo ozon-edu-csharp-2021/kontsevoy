@@ -64,16 +64,6 @@ namespace MerchandiseService.Infrastructure.Extensions
             return builder;
         }
         
-        public static IHostBuilder AddHttpOpenTracing(this IHostBuilder builder)
-        {
-            builder.ConfigureServices(services =>
-            {
-                services.AddOpenTracing();
-                services.AddJaeger();
-            });
-            return builder;
-        }
-        
         public static IHostBuilder AddSerilog(this IHostBuilder builder)
         {
             builder.UseSerilog((context, configuration) => configuration

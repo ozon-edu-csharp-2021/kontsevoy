@@ -19,6 +19,7 @@ services:
       KafkaConfiguration__EmailNotificationTopic: "email_notification_event"
       KafkaConfiguration__EmployeeNotificationTopic: "employee_notification_event"
       KafkaConfiguration__EmployeeNotificationGroup: "employee"
+      JaegerConfiguration__ServerAddress: "jaeger"
     depends_on:
       - merchandise-service-db
       - stock-api
