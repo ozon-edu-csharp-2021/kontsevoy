@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using OpenTracing.Contrib.NetCore.Configuration;
 using Serilog;
 
 namespace MerchandiseService.Infrastructure.Extensions
@@ -44,11 +43,14 @@ namespace MerchandiseService.Infrastructure.Extensions
                 //Kafka
                 services.AddMessageBroker();
                 services.AddHostedService<StockReplenishedConsumerHostedService>();
+                services.AddHostedService<EmployeeEventsConsumerHostedService>();
                 //Grpc
                 services.AddGrpc(options => options.Interceptors.Add<LoggingInterceptor>());
                 //MerchRequest handlers
                 services.AddHostedService<AcceptorHostedService>();
                 services.AddHostedService<ProcessorHostedService>();
+                //MemoryCache
+                services.AddMemoryCache();
             });
             return builder;
         }

@@ -95,11 +95,12 @@ services:
     container_name: EmployeesService
     ports:
       - "8443:80"
-    networks:
-      - ozon-network
     environment:
       ConnectionString: "Host=employees-service-postgres-db;Port=5432;Database=employees-service;Username=postgres;Password=postgres;"
       BootstrapServers: "broker:29092"
+      Topic: "employee_notification_event"
+    networks:
+      - ozon-network
     depends_on:
       - employees-service-postgres-db
       - zookeeper

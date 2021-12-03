@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using MediatR;
 using MerchandiseService.Infrastructure.Models;
 
-namespace MerchandiseService.Infrastructure.Commands.ReplenishStock
+namespace MerchandiseService.Infrastructure.Commands.ReplenishStockEvent
 {
     public class ReplenishStockCommand : IRequest
     {

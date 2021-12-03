@@ -34,7 +34,7 @@ namespace MerchandiseService.HostedServices
                     {
                         try
                         {
-                            merchRequest.ChangeStatus(MerchRequestStatus.Processing);
+                            merchRequest.ReadyToProcessing();
                             await repository.UpdateAsync(merchRequest, stoppingToken);
                         }
                         catch (Exception e)

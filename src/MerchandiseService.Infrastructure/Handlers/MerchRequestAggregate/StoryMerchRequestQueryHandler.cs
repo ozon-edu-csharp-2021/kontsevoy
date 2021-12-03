@@ -9,7 +9,7 @@ using OpenTracing;
 
 namespace MerchandiseService.Infrastructure.Handlers.MerchRequestAggregate
 {
-    public class StoryMerchRequestQueryHandler :  IRequestHandler<StoryMerchRequestQuery, StoryMerchRequestQueryResponse>
+    public class StoryMerchRequestQueryHandler : IRequestHandler<StoryMerchRequestQuery, StoryMerchRequestQueryResponse>
     {
         private IMerchRequestRepository MerchRequestRepository { get; }
         private ITracer Tracer { get; }

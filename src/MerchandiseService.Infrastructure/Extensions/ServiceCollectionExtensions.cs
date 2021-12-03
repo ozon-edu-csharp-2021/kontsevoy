@@ -4,6 +4,7 @@ using Jaeger.Samplers;
 using Jaeger.Senders.Thrift;
 using MediatR;
 using MerchandiseService.Infrastructure.Handlers.MerchRequestAggregate;
+using MerchandiseService.Infrastructure.Handlers.ReplenishStockEvent;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -23,8 +24,6 @@ namespace MerchandiseService.Infrastructure.Extensions
         public static void AddInfrastructureServices(this IServiceCollection services)
         {
             services.AddMediatR(typeof(CreateMerchRequestCommandHandler).Assembly);
-            services.AddMediatR(typeof(StoryMerchRequestQueryHandler).Assembly);
-            services.AddMediatR(typeof(ReplenishStockCommandHandler).Assembly);
         }
         
         public static void AddJaeger(this IServiceCollection services)

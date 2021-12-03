@@ -18,6 +18,7 @@ namespace MerchandiseService.Domain.AggregationModels.Enumerations
         public static ClothingSize GetByName(string name) => Enumeration.GetByName<ClothingSize>(name);
         
         public static implicit operator ClothingSize(int value) => GetById(value);
+        public static explicit operator ClothingSize(long value) => GetById((int)value);
         public static implicit operator ClothingSize(string value) => GetByName(value);
     }
 }

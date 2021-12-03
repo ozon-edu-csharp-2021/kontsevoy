@@ -78,19 +78,45 @@ namespace MerchandiseService.Domain.AggregationModels.MerchRequestAggregate
         public ClothingSize EmployeeClothingSize { get; }
         public MerchPack MerchPack { get; }
         public MerchRequestStatus Status { get; private set; }
-        public HandoutTimestamp TryHandoutAt { get; }
-        public HandoutTimestamp HandoutAt { get; }
-        public Handout Handout { get; }
+        public HandoutTimestamp TryHandoutAt { get; private set; }
+        public HandoutTimestamp HandoutAt { get; private set; }
+        public Handout Handout { get; private set; }
 
         private static bool IsFinalStatus(MerchRequestStatus status)
             => status == MerchRequestStatus.Done || status == MerchRequestStatus.Decline;
 
-        public void ChangeStatus(MerchRequestStatus newStatus)
+        public void ReadyToProcessing()
         {
-            if (IsFinalStatus(Status))
-                throw new MerchRequestStatusException($"Request in final status. Change status unavailable");
+            if (Status != MerchRequestStatus.New || Status != MerchRequestStatus.Awaiting)
+                throw new MerchRequestStatusException(
+                    $"Change status to {MerchRequestStatus.Processing} from {Status} unavailable.");
+            
+            Status = MerchRequestStatus.Processing;
+        }
 
-            Status = newStatus;
+        public void DoHandout(Handout handout, HandoutTimestamp timestamp)
+        {
+            if (Status != MerchRequestStatus.Processing)
+                throw new MerchRequestStatusException(
+                    $"Handout available only in status {MerchRequestStatus.Processing}. Current status {Status}");
+            
+            Handout = handout ?? throw new ArgumentNullException(nameof(handout), $"{nameof(handout)} must be provided");
+            HandoutAt = TryHandoutAt = timestamp ?? throw new ArgumentNullException(nameof(timestamp),
+                $"{nameof(timestamp)} must be provided");
+            
+            Status = MerchRequestStatus.Done;
+        }
+
+        public void TryHandoutNeedAwait(HandoutTimestamp timestamp)
+        {
+            if (Status != MerchRequestStatus.Processing)
+                throw new MerchRequestStatusException(
+                    $"TryHandoutNeedAwait available only in status {MerchRequestStatus.Processing}. Current status {Status}");
+            
+            TryHandoutAt = timestamp ?? throw new ArgumentNullException(nameof(timestamp),
+                $"{nameof(timestamp)} must be provided");
+            
+            Status = MerchRequestStatus.Awaiting;
         }
     }
 }

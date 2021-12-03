@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Confluent.Kafka;
 using CSharpCourse.Core.Lib.Events;
 using MediatR;
-using MerchandiseService.Infrastructure.Commands.ReplenishStock;
+using MerchandiseService.Infrastructure.Commands.ReplenishStockEvent;
 using MerchandiseService.Infrastructure.Kafka.Configuration;
 using MerchandiseService.Infrastructure.Models;
 using Microsoft.Extensions.DependencyInjection;

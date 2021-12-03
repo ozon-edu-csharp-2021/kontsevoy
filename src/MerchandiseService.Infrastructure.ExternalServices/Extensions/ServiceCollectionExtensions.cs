@@ -1,6 +1,8 @@
 ﻿using System;
 using Grpc.Net.Client;
+using MediatR;
 using MerchandiseService.Infrastructure.ExternalServices.Configuration;
+using MerchandiseService.Infrastructure.ExternalServices.Handlers.StockApi;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OzonEdu.StockApi.Grpc;
@@ -20,6 +22,7 @@ namespace MerchandiseService.Infrastructure.ExternalServices.Extensions
         public static void AddExternalServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddStockApiService(configuration);
+            services.AddMediatR(typeof(StockApiItemsQueryHandler).Assembly);
         }
 
         private static void AddStockApiService(this IServiceCollection services, IConfiguration configuration)
