@@ -38,6 +38,8 @@ services:
       POSTGRES_PASSWORD: WQs4##!k7qi0TV0B8!LC3c74pI@oPc#!
       POSTGRES_DB: merchandise-service
     command: "-c log_statement=all"
+    volumes:
+      - merchandise-service-db:/var/lib/postgresql/data
       
   stock-api:
     image: 'ghcr.io/ozon-edu-csharp-2021/stock-api:main'
@@ -66,6 +68,8 @@ services:
     container_name: EmailingService
     ports:
       - "8555:80"
+    environment:
+      KafkaTopics__EmployeeNotificationEventTopic: "employee_notification_event"
     depends_on:
       - zookeeper
       - broker
@@ -96,7 +100,7 @@ services:
     ports:
       - "8443:80"
     environment:
-      ConnectionString: "Host=employees-service-postgres-db;Port=5432;Database=employees-service;Username=postgres;Password=postgres;"
+      ConnectionString: "Host=employees-service-postgres-db;Port=5432;Database=employees-service;Username=postgres;Password=employeeServicePassword;"
       BootstrapServers: "broker:29092"
       Topic: "employee_notification_event"
     networks:
@@ -148,10 +152,10 @@ services:
       - "5425:5432"
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: employeeServicePassword
       POSTGRES_DB: employees-service
     volumes:
-      - employees-service-postgres-db:/var/lib/postgresql/data"
+      - employees-service-postgres-db:/var/lib/postgresql/data
     command: "-c log_statement=all"
     networks:
       - ozon-network
@@ -214,6 +218,8 @@ volumes:
   emailing-service:
     driver: local
   stock-api-db:
+    driver: local
+  merchandise-service-db:
     driver: local
   supply-service-db:
     driver: local
