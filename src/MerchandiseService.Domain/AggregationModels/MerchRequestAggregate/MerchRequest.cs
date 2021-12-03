@@ -84,7 +84,7 @@ namespace MerchandiseService.Domain.AggregationModels.MerchRequestAggregate
 
         public void ReadyToProcessing()
         {
-            if (Status != MerchRequestStatus.New || Status != MerchRequestStatus.Awaiting)
+            if (Status != MerchRequestStatus.New && Status != MerchRequestStatus.Awaiting)
                 throw new MerchRequestStatusException(
                     $"Change status to {MerchRequestStatus.Processing} from {Status} unavailable.");
             

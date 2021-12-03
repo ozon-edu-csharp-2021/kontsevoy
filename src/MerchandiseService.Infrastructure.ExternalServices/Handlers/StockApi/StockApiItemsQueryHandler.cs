@@ -35,7 +35,11 @@ namespace MerchandiseService.Infrastructure.ExternalServices.Handlers.StockApi
 
             foreach (var merchPack in Enumeration.GetAll<MerchPack>())
                 foreach (var merchItem in merchPack.Items)
-                    typeDictionary.GetValueOrDefault(merchItem.MerchType, new HashSet<MerchPack>()).Add(merchPack);
+                {
+                    if (!typeDictionary.ContainsKey(merchItem.MerchType))
+                        typeDictionary[merchItem.MerchType] = new HashSet<MerchPack>();
+                    typeDictionary[merchItem.MerchType].Add(merchPack);
+                }
 
             var dictionary = new Dictionary<long, MerchItem>();
             var sized = new Dictionary<MerchType, Dictionary<ClothingSize, long>>();
@@ -55,7 +59,11 @@ namespace MerchandiseService.Infrastructure.ExternalServices.Handlers.StockApi
                 };
                 dictionary.Add(item.Sku, merchItem);
                 if (clothingSize is not null)
-                    sized.GetValueOrDefault(type, new Dictionary<ClothingSize, long>())[clothingSize] = item.Sku;
+                {
+                    if (!sized.ContainsKey(type))
+                        sized[type] = new Dictionary<ClothingSize, long>();
+                    sized[type][clothingSize] = item.Sku;
+                }
                 else
                     unsized[type] = item.Sku;
             }
