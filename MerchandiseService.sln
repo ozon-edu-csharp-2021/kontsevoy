@@ -31,6 +31,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Domain.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Migrator", "src\MerchandiseService.Migrator\MerchandiseService.Migrator.csproj", "{EC2FB6E3-BA55-4301-B0E7-D306B8746541}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Domain.Base", "src\MerchandiseService.Domain.Base\MerchandiseService.Domain.Base.csproj", "{76A53345-4C19-4401-B1D5-C36EDEE63C1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Infrastructure.Database", "src\MerchandiseService.Infrastructure.Database\MerchandiseService.Infrastructure.Database.csproj", "{EA7757EE-7BA7-4E95-9E71-2672AF0D6415}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Infrastructure.Database.Postgres", "src\MerchandiseService.Infrastructure.Database.Postgres\MerchandiseService.Infrastructure.Database.Postgres.csproj", "{A95120AF-71FB-476E-B8F8-82593EF181A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Infrastructure.Kafka", "src\MerchandiseService.Infrastructure.Kafka\MerchandiseService.Infrastructure.Kafka.csproj", "{2B03352F-2B15-4AFE-B1B1-72054C36F18F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchandiseService.Infrastructure.ExternalServices", "src\MerchandiseService.Infrastructure.ExternalServices\MerchandiseService.Infrastructure.ExternalServices.csproj", "{8635BEA4-2550-4806-82E9-38001DB9E573}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +54,11 @@ Global
 		{76226AB6-5136-41D9-A943-6BA1AC2957C3} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
 		{9B318882-3AEC-485E-BF72-9E1667D2806F} = {84B33F89-B200-4A29-A3EB-A670C2C94024}
 		{EC2FB6E3-BA55-4301-B0E7-D306B8746541} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
+		{76A53345-4C19-4401-B1D5-C36EDEE63C1B} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
+		{EA7757EE-7BA7-4E95-9E71-2672AF0D6415} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
+		{A95120AF-71FB-476E-B8F8-82593EF181A0} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
+		{2B03352F-2B15-4AFE-B1B1-72054C36F18F} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
+		{8635BEA4-2550-4806-82E9-38001DB9E573} = {434C0B2E-59F1-4DBC-B675-4350E74DD55E}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{06E4CA54-3F0A-407C-87F6-F3EC5BA15B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -74,5 +89,25 @@ Global
 		{EC2FB6E3-BA55-4301-B0E7-D306B8746541}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC2FB6E3-BA55-4301-B0E7-D306B8746541}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC2FB6E3-BA55-4301-B0E7-D306B8746541}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76A53345-4C19-4401-B1D5-C36EDEE63C1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76A53345-4C19-4401-B1D5-C36EDEE63C1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76A53345-4C19-4401-B1D5-C36EDEE63C1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76A53345-4C19-4401-B1D5-C36EDEE63C1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA7757EE-7BA7-4E95-9E71-2672AF0D6415}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA7757EE-7BA7-4E95-9E71-2672AF0D6415}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA7757EE-7BA7-4E95-9E71-2672AF0D6415}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA7757EE-7BA7-4E95-9E71-2672AF0D6415}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A95120AF-71FB-476E-B8F8-82593EF181A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A95120AF-71FB-476E-B8F8-82593EF181A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A95120AF-71FB-476E-B8F8-82593EF181A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A95120AF-71FB-476E-B8F8-82593EF181A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B03352F-2B15-4AFE-B1B1-72054C36F18F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B03352F-2B15-4AFE-B1B1-72054C36F18F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B03352F-2B15-4AFE-B1B1-72054C36F18F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B03352F-2B15-4AFE-B1B1-72054C36F18F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8635BEA4-2550-4806-82E9-38001DB9E573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8635BEA4-2550-4806-82E9-38001DB9E573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8635BEA4-2550-4806-82E9-38001DB9E573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8635BEA4-2550-4806-82E9-38001DB9E573}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

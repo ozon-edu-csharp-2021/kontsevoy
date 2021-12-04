@@ -17,16 +17,19 @@ namespace MerchandiseService.Migrator.Migrations
                     .WithColumn("id").AsInt64().Identity().PrimaryKey()
                     .WithColumn("created_at").AsDateTime().NotNullable()
                         .WithDefault(SystemMethods.CurrentDateTime)
-                    .WithColumn("employee_id").AsInt64().NotNullable()
-                        .WithColumnDescription("Id сотрудника указанный при запросе мерчпака")
-                    .WithColumn("employee_notification_email").AsString().NotNullable()
+                    .WithColumn("employee_email").AsString().NotNullable()
                         .WithColumnDescription("Email сотрудника (для оповещения о готовности мерчпака к выдаче)")
+                    .WithColumn("employee_name").AsString().NotNullable()
+                        .WithColumnDescription("Имя сотрудника")
                     .WithColumn("employee_clothing_size").AsString().NotNullable()
                         .WithColumnDescription("Размер одежды сотрудника (для выбора состава мерчпака)")
+                    .WithColumn("manager_email").AsString().NotNullable()
+                        .WithColumnDescription("Email менеджера (для оповещения о готовности мерчпака к выдаче)")
+                    .WithColumn("manager_name").AsString().NotNullable()
+                        .WithColumnDescription("Имя менеджера")
                     .WithColumn("merch_pack_id").AsInt64().NotNullable()
                     .WithColumn("status").AsString().NotNullable()
                     .WithColumn("try_handout_at").AsDateTime().Nullable()
-                        .WithDefault(SystemMethods.CurrentDateTime)
                         .WithColumnDescription("Дата последней попытки выдать мерч")
                     .WithColumn("handout_at").AsDateTime().Nullable()
                         .WithColumnDescription("Дата выдачи мерчпака")
@@ -34,9 +37,13 @@ namespace MerchandiseService.Migrator.Migrations
                         .WithColumnDescription("Состав выданного мерчпака");
                 
                 Create
-                    .Index($"idx_{TableName}_employee_id")
+                    .Index($"idx_{TableName}_employee_email")
                     .OnTable(TableName)
-                    .OnColumn("employee_id");
+                    .OnColumn("employee_email");
+                Create
+                    .Index($"idx_{TableName}_status")
+                    .OnTable(TableName)
+                    .OnColumn("status");
             }
         }
 

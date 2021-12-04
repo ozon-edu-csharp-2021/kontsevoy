@@ -12,7 +12,8 @@ COPY "deploy/entrypoint.sh" "/app/publish/."
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS runtime
 WORKDIR /app
-EXPOSE 80
+EXPOSE 5300
+EXPOSE 5302
 
 FROM runtime AS final
 WORKDIR /app

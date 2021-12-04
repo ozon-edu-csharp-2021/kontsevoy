@@ -10,7 +10,7 @@ namespace MerchandiseService.HttpClient
     {
         [Post("request")]
         Task<RequestMerchResponse> RequestMerch([Body] RequestMerchRequest request, CancellationToken token);
-        [Post("inquiry")]
-        Task<InquiryMerchResponse> InquiryMerch([Body] InquiryMerchRequest request, CancellationToken token);
+        [Post("story")]
+        Task<StoryMerchResponse> InquiryMerch([Body] StoryMerchRequest request, CancellationToken token);
     }
 }

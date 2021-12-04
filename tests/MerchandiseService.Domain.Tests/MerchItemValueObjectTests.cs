@@ -12,35 +12,35 @@ namespace MerchandiseService.Domain.Tests
         {
             Assert.Throws<ArgumentNullException>(() => new MerchItem(null, null));
             Assert.Throws<ArgumentNullException>(() => new MerchItem(null, new PositiveQuantity(1)));
-            Assert.Throws<ArgumentNullException>(() => new MerchItem(MerchType.Notepad, null));
+            Assert.Throws<ArgumentNullException>(() => new MerchItem(MerchType.PenStarter, null));
         }
         
         [Fact(DisplayName = "Равенство экземпляров")]
         public void Equality()
         {
             Assert.Equal(
-                new MerchItem(MerchType.Bag, new PositiveQuantity(1)), 
-                new MerchItem(MerchType.Bag, new PositiveQuantity(1))
+                new MerchItem(MerchType.SocksStarter, new PositiveQuantity(1)), 
+                new MerchItem(MerchType.SocksStarter, new PositiveQuantity(1))
                 );
             Assert.Equal(
-                new MerchItem(MerchType.Pen, new PositiveQuantity(2)), 
-                new MerchItem(MerchType.Pen, new PositiveQuantity(2))
+                new MerchItem(MerchType.TShirtAfterProbation, new PositiveQuantity(2)), 
+                new MerchItem(MerchType.TShirtAfterProbation, new PositiveQuantity(2))
                 );     
             Assert.NotEqual(
-                new MerchItem(MerchType.Socks, new PositiveQuantity(5)), 
-                new MerchItem(MerchType.TShirt, new PositiveQuantity(5))
+                new MerchItem(MerchType.SweatshirtAfterProbation, new PositiveQuantity(5)), 
+                new MerchItem(MerchType.TShirtStarter, new PositiveQuantity(5))
                 );
             Assert.NotEqual(
-                new MerchItem(MerchType.Sweatshirt, new PositiveQuantity(8)), 
-                new MerchItem(MerchType.Sweatshirt, new PositiveQuantity(10))
+                new MerchItem(MerchType.NotepadVeteran, new PositiveQuantity(8)), 
+                new MerchItem(MerchType.NotepadVeteran, new PositiveQuantity(10))
                 );
         }
         
         [Fact(DisplayName = "Можно получить переданный тип мерча")]
         public void CanObtainMerchType()
         {
-            Assert.Equal(MerchType.Bag, new MerchItem(MerchType.Bag, new PositiveQuantity(1)).MerchType);
-            Assert.Equal(MerchType.Pen, new MerchItem(MerchType.Pen, new PositiveQuantity(1)).MerchType);
+            Assert.Equal(MerchType.SocksStarter, new MerchItem(MerchType.SocksStarter, new PositiveQuantity(1)).MerchType);
+            Assert.Equal(MerchType.TShirtAfterProbation, new MerchItem(MerchType.TShirtAfterProbation, new PositiveQuantity(1)).MerchType);
         }
         
         [Fact(DisplayName = "Можно получить переданное количество")]
@@ -48,7 +48,7 @@ namespace MerchandiseService.Domain.Tests
         {
             var quantity = new PositiveQuantity(45);
             
-            Assert.Equal(quantity, new MerchItem(MerchType.Bag, quantity).Quantity);
+            Assert.Equal(quantity, new MerchItem(MerchType.SocksStarter, quantity).Quantity);
         }
     }
 }

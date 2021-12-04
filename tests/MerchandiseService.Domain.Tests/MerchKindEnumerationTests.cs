@@ -1,6 +1,6 @@
 ﻿using System;
 using MerchandiseService.Domain.AggregationModels.Enumerations;
-using MerchandiseService.Domain.Models;
+using MerchandiseService.Domain.Base.Models;
 using Xunit;
 
 namespace MerchandiseService.Domain.Tests

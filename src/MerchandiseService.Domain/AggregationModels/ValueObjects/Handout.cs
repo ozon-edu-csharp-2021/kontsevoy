@@ -1,6 +1,6 @@
 using System;
 using System.Text.Json;
-using MerchandiseService.Domain.Models;
+using MerchandiseService.Domain.Base.Models;
 
 namespace MerchandiseService.Domain.AggregationModels.ValueObjects
 {

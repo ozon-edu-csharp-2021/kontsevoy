@@ -1,13 +1,17 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using MerchandiseService.HostedServices;
+using MerchandiseService.Infrastructure.Database.Postgres.Extensions;
 using MerchandiseService.Infrastructure.Filters;
 using MerchandiseService.Infrastructure.Interceptors;
+using MerchandiseService.Infrastructure.Kafka.Extensions;
 using MerchandiseService.Infrastructure.StartupFilters;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace MerchandiseService.Infrastructure.Extensions
 {
@@ -17,7 +21,9 @@ namespace MerchandiseService.Infrastructure.Extensions
         {
             builder.ConfigureServices(services =>
             {
+                //Alive endpoints
                 services.AddSingleton<IStartupFilter, AliveStartupFilter>();
+                //Swagger
                 services.AddSingleton<IStartupFilter, SwaggerStartupFilter>();
                 services.AddSwaggerGen(options =>
                 {
@@ -29,10 +35,22 @@ namespace MerchandiseService.Infrastructure.Extensions
                     var xmlFilePath = Path.Combine(AppContext.BaseDirectory, xmlFileName);
                     options.IncludeXmlComments(xmlFilePath);
                 });
+                //Infrastructure
                 services.AddInfrastructureServices();
+                //Database
                 services.AddDatabaseComponents();
                 services.AddInfrastructureRepositories();
+                //Kafka
+                services.AddMessageBroker();
+                services.AddHostedService<StockReplenishedConsumerHostedService>();
+                services.AddHostedService<EmployeeEventsConsumerHostedService>();
+                //Grpc
                 services.AddGrpc(options => options.Interceptors.Add<LoggingInterceptor>());
+                //MerchRequest handlers
+                services.AddHostedService<AcceptorHostedService>();
+                services.AddHostedService<ProcessorHostedService>();
+                //MemoryCache
+                services.AddMemoryCache();
             });
             return builder;
         }
@@ -43,6 +61,15 @@ namespace MerchandiseService.Infrastructure.Extensions
             {
                 services.AddControllers(options => options.Filters.Add<GlobalExceptionFilter>());
             });
+            return builder;
+        }
+        
+        public static IHostBuilder AddSerilog(this IHostBuilder builder)
+        {
+            builder.UseSerilog((context, configuration) => configuration
+                .ReadFrom
+                .Configuration(context.Configuration)
+                .WriteTo.Console());
             return builder;
         }
     }

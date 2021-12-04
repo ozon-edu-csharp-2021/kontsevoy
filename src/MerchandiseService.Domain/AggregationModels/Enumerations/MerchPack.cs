@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using MerchandiseService.Domain.AggregationModels.Enumerations.MerchPacks;
 using MerchandiseService.Domain.AggregationModels.ValueObjects;
-using MerchandiseService.Domain.Models;
+using MerchandiseService.Domain.Base.Models;
 
 namespace MerchandiseService.Domain.AggregationModels.Enumerations
 {

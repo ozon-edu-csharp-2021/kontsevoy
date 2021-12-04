@@ -1,10 +1,12 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using MerchandiseService.HttpClient.Models;
 using MerchandiseService.Infrastructure.Commands.MerchRequestAggregate;
 using MerchandiseService.Infrastructure.Queries.MerchRequestAggregate;
 using Microsoft.AspNetCore.Mvc;
+using OpenTracing;
 
 namespace MerchandiseService.Controllers
 {
@@ -14,8 +16,10 @@ namespace MerchandiseService.Controllers
     public class MerchandiseController : ControllerBase
     {
         private IMediator Mediator { get; }
+        
+        private ITracer Tracer { get; }
 
-        public MerchandiseController(IMediator mediator) => Mediator = mediator;
+        public MerchandiseController(IMediator mediator, ITracer tracer) => (Mediator, Tracer) = (mediator, tracer);
         
         /// <summary>
         /// Сформировать запрос на выдачу комплекта мерча
@@ -26,10 +30,14 @@ namespace MerchandiseService.Controllers
         [HttpPost("request")]
         public async Task<ActionResult<RequestMerchResponse>> RequestMerch(RequestMerchRequest request, CancellationToken token)
         {
+            using var span = Tracer.BuildSpan(nameof(RequestMerch)).StartActive();
+            
             var merchRequest = new CreateMerchRequestCommand
             {
-                EmployeeId = request.EmployeeId,
-                NotificationEmail = request.NotificationEmail,
+                EmployeeEmail = request.EmployeeEmail,
+                EmployeeName = request.EmployeeName,
+                ManagerEmail = request.ManagerEmail,
+                ManagerName = request.ManagerName,
                 ClothingSize = (int)request.ClothingSize,
                 MerchPackType = (int)request.MerchPackType
             };
@@ -40,23 +48,38 @@ namespace MerchandiseService.Controllers
         }
         
         /// <summary>
-        /// Проверить был ли выдан комплект мерча 
+        /// Список запросов мерча 
         /// </summary>
-        /// <param name="request">Кому и какой тип комплекта</param>
+        /// <param name="request">По кому</param>
         /// <param name="token">Токен отмены</param>
-        /// <returns>Факт выдачи</returns>
-        [HttpPost("inquiry")]
-        public async Task<ActionResult<InquiryMerchResponse>> InquiryMerch(InquiryMerchRequest request, CancellationToken token)
+        /// <returns>Список запросов</returns>
+        [HttpPost("story")]
+        public async Task<ActionResult<StoryMerchResponse>> StoryMerch(StoryMerchRequest request, CancellationToken token)
         {
-            var inquiryRequest = new InquiryMerchRequestQuery
+            using var span = Tracer.BuildSpan(nameof(StoryMerch)).WithTag(nameof(request.EmployeeEmail), request.EmployeeEmail).StartActive();
+            
+            var inquiryRequest = new StoryMerchRequestQuery
             {
-                EmployeeId = request.EmployeeId,
-                MerchPackId = (int)request.MerchPackType
+                EmployeeEmail = request.EmployeeEmail
             };
 
-            var isHandOut = await Mediator.Send(inquiryRequest, token);
+            var response = await Mediator.Send(inquiryRequest, token);
+            var result = new StoryMerchResponse
+            (
+                response.EmployeeEmail,
+                response.MerchRequests.Select(f => new StoryMerchResponseItem(
+                    f.EmployeeName,
+                    $"{f.ManagerName} <{f.ManagerEmail}>",
+                    f.Pack,
+                    f.ClothingSize,
+                    f.RequestedAt,
+                    f.Status,
+                    f.TryHandoutAt,
+                    f.HandoutAt
+                )).ToList().AsReadOnly()
+            );
             
-            return Ok(new InquiryMerchResponse(isHandOut));
+            return Ok(result);
         }
     }
 }

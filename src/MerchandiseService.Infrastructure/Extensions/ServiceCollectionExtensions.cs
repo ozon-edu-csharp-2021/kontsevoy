@@ -1,12 +1,15 @@
-﻿using MediatR;
-using MerchandiseService.Domain.AggregationModels.MerchRequestAggregate;
-using MerchandiseService.Domain.Contracts;
+﻿using Jaeger;
+using Jaeger.Reporters;
+using Jaeger.Samplers;
+using Jaeger.Senders.Thrift;
+using MediatR;
+using MerchandiseService.Infrastructure.Configuration;
 using MerchandiseService.Infrastructure.Handlers.MerchRequestAggregate;
-using MerchandiseService.Infrastructure.Repositories.Implementation;
-using MerchandiseService.Infrastructure.Repositories.Infrastructure;
-using MerchandiseService.Infrastructure.Repositories.Infrastructure.Interfaces;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Npgsql;
+using Microsoft.Extensions.Logging;
+using OpenTracing;
 
 namespace MerchandiseService.Infrastructure.Extensions
 {
@@ -22,24 +25,26 @@ namespace MerchandiseService.Infrastructure.Extensions
         public static void AddInfrastructureServices(this IServiceCollection services)
         {
             services.AddMediatR(typeof(CreateMerchRequestCommandHandler).Assembly);
-            services.AddMediatR(typeof(InquiryMerchRequestQueryHandler).Assembly);
         }
         
-        public static void AddDatabaseComponents(this IServiceCollection services)
+        public static void AddJaeger(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IDbConnectionFactory<NpgsqlConnection>, NpgsqlConnectionFactory>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IChangeTracker, ChangeTracker>();
-        }
-
-        /// <summary>
-        /// Добавление в DI контейнер инфраструктурных репозиториев
-        /// </summary>
-        /// <param name="services">Объект <see cref="IServiceCollection"/></param>
-        public static void AddInfrastructureRepositories(this IServiceCollection services)
-        {
-            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
-            services.AddScoped<IMerchRequestRepository, MerchRequestRepository>();
+            // Adds the Jaeger Tracer.
+            var address = configuration.GetSection(nameof(JaegerConfiguration))
+                .Get<JaegerConfiguration>()?.ServerAddress;
+            
+            services.AddSingleton<ITracer>(sp =>
+            {
+                var serviceName = sp.GetRequiredService<IWebHostEnvironment>().ApplicationName;
+                var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
+                var reporter = new RemoteReporter.Builder().WithLoggerFactory(loggerFactory).WithSender(new UdpSender(address, 0, 0))
+                    .Build();
+                var tracer = new Tracer.Builder(serviceName)
+                    .WithSampler(new ConstSampler(true))
+                    .WithReporter(reporter)
+                    .Build();
+                return tracer;
+            });
         }
     }
 }
